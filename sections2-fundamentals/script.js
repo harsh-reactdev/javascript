@@ -60,4 +60,6 @@ const fruitJuicer = function (apples, oranges) {
   return `Juice with ${applePcs} of apple and ${orangePcs} of oranges.`;
 };
 
-console.log(fruitJuicer(2, 3));
+// console.log(fruitJuicer(2, 3));
+
+//****************************************************************
