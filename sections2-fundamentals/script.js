@@ -63,3 +63,7 @@ const fruitJuicer = function (apples, oranges) {
 // console.log(fruitJuicer(2, 3));
 
 //****************************************************************
+// Arrays
+
+const a = [1, 'asd', true, {}, []];
+const b = new Array(1, 'sdfds', false, {}, []);
