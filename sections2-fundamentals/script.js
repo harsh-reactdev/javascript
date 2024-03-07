@@ -67,3 +67,15 @@ const fruitJuicer = function (apples, oranges) {
 
 const a = [1, 'asd', true, {}, []];
 const b = new Array(1, 'sdfds', false, {}, []);
+
+a.push(1);
+console.log(a);
+
+a.pop();
+console.log(a);
+
+a.unshift(1);
+console.log(a);
+
+a.shift();
+console.log(a);
