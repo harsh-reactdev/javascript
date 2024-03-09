@@ -38,8 +38,8 @@ const calcAge2 = function (birthyear) {
 };
 
 // Arrow functions
-const calcAge = (birthyear) => 2024 - birthyear; //single line do not need return keyword
-const calcAgeAndLog = (birthyear) => {
+const calcAge = birthyear => 2024 - birthyear; //single line do not need return keyword
+const calcAgeAndLog = birthyear => {
   // if we have multiple lines of code inside the function block, then we need flower braces and also a return keyword if we are returning any value
   const age = 2024 - birthyear;
   console.log(age);
@@ -84,7 +84,7 @@ a.indexOf(1); //returns index
 
 a.includes(1); // returns true if present and false otherwise
 
-const c = a.map((elem) => {
+const c = a.map(elem => {
   //do something with each item
   // does smthng with each item and adds the modified array item to the new array
 }); //returns a new array with modified items of the array being iterated over
