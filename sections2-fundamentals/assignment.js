@@ -47,3 +47,31 @@ for(i =0; i<str.length; i++){
 
 // console.log(occ);
 
+
+
+// ****************************************************************
+// Objects 
+
+const newObj = new Object({
+  name: 'Harsh',
+  birthyear: 2000,
+  job: 'Frontend web developer',
+  friends: ['Akhil', 'Abhijna', 'Puneeth', 'Mahesh', 'Jeevan' ],
+  hasDL: true,
+
+  calcAge: function() {
+    this.age = 2024 - this.birthyear;
+    return this.age;
+  }, //this keyword here points to newObj
+
+  getSummary: function() {
+    this.summary = `This is ${this.name}, a ${this.age} years old ${this.job}. He's got ${this.friends.length} friends and they are ${this.friends} . ${this.hasDL ? `He has an active drivers license` : ''}.`;
+    return this.summary;
+  }
+});
+
+// console.log(`I am ${newObj.name}. I have ${newObj.friends.length} friends and ${newObj.friends[0]} is my bestfriend.`);
+newObj.calcAge();
+newObj.getSummary();
+// console.log(newObj.age);
+// console.log(newObj.summary);

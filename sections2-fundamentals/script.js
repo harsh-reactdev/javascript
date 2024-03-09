@@ -69,13 +69,55 @@ const a = [1, 'asd', true, {}, []];
 const b = new Array(1, 'sdfds', false, {}, []);
 
 a.push(1);
-console.log(a);
+// console.log(a);
 
 a.pop();
-console.log(a);
+// console.log(a);
 
 a.unshift(1);
-console.log(a);
+// console.log(a);
 
 a.shift();
-console.log(a);
+// console.log(a);
+
+a.indexOf(1); //returns index
+
+a.includes(1); // returns true if present and false otherwise
+
+const c = a.map((elem) => {
+  //do something with each item
+  // does smthng with each item and adds the modified array item to the new array
+}); //returns a new array with modified items of the array being iterated over
+
+//****************************************************************
+// Objects
+
+const aObj = new Object({
+  //object constructor syntax
+  name: 'harsh',
+  age: 24,
+});
+
+const bObj = {
+  //Object literal syntax
+  name: 'harsh',
+  job: 'React Ts Developer',
+  friends: ['Akhil', 'Jeevan', 'Mahesh'],
+};
+
+// console.log(aObj);
+// console.log(bObj);
+
+// iterations :
+const arr2 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+for (let i = 0; i < arr2.length; i++) {
+  // continue; used to skip an interation
+  // break; used to terminate the loop immediately
+  // do something
+}
+
+while (true) {
+  //do something
+  //use when we dont know the number of iterations to be performed
+}
