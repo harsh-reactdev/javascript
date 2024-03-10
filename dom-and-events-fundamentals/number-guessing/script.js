@@ -8,19 +8,20 @@ const checkButton = document.querySelector('.check');
 const againButton = document.querySelector('.again');
 const secretNumber = document.querySelector('.number');
 
-let actualNum = Math.trunc(Math.random() * 20);
+const generateRandomNumber = () => Math.trunc((Math.random() * 20) + 1);
+
+let actualNum = generateRandomNumber();
 let score = 20;
 let highScore = 0;
 
 const initValues = function () {
-    // labelHighScore.textContent = score > highScore ? score : highScore;
+    changeBg('#222', '15rem');
     secretNumber.textContent = '?';
-    actualNum = Math.trunc(Math.random() * 20);
+    actualNum = generateRandomNumber();
     score = 20;
     resultMessage.textContent = 'Start guessing...';
     guessedNumber.value = '';
     labelScore.textContent = score;
-
 };
 
 const getResult = function (guessedNum, actual) {
@@ -56,25 +57,30 @@ const showGuessedNumber = function () {
     secretNumber.textContent = actualNum;
 };
 
-const changeBgOnWin = function () {
-    // document.body.style('b')
+const changeBg = function (bgCol, sNumWidth) {
+    document.querySelector('body').style.backgroundColor = bgCol;
+    secretNumber.style.width = sNumWidth;
 };
 
 const checkResult = function () {
-    if (score) {
+    if (score > 1) {
         const guessedNum = guessedNumber.value;
-        // console.log(guessedNum);
-        const { resultStr, isCorrect } = getResult(guessedNum, actualNum);
-        changeResMsg(resultStr);
-        if (!isCorrect) {
-            updateScore();
-        }
-        else {
-            setHighScore();
-            showGuessedNumber();
-            changeBgOnWin();
-        }
-    } else alert('You lost the game');
+        if (guessedNum) {
+            const { resultStr, isCorrect } = getResult(guessedNum, actualNum);
+            changeResMsg(resultStr);
+            if (!isCorrect) {
+                updateScore();
+            }
+            else {
+                setHighScore();
+                showGuessedNumber();
+                changeBg('#60b347', '30rem');
+            }
+        } else changeResMsg('🚫 Please guess a number.!');
+    } else {
+        changeResMsg('💀 You lost the game');
+        labelScore.textContent = 0;
+    };
 };
 
 checkButton.addEventListener('click', checkResult);
