@@ -42,7 +42,7 @@ const calcAge = birthyear => 2024 - birthyear; //single line do not need return 
 const calcAgeAndLog = birthyear => {
   // if we have multiple lines of code inside the function block, then we need flower braces and also a return keyword if we are returning any value
   const age = 2024 - birthyear;
-  console.log(age);
+  // console.log(age);
 };
 
 //****************************************************************
@@ -111,13 +111,13 @@ const bObj = {
 // iterations :
 const arr2 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-for (let i = 0; i < arr2.length; i++) {
-  // continue; used to skip an interation
-  // break; used to terminate the loop immediately
-  // do something
-}
+// for (let i = 0; i < arr2.length; i++) {
+//   // continue; used to skip an interation
+//   // break; used to terminate the loop immediately
+//   // do something
+// }
 
-while (true) {
-  //do something
-  //use when we dont know the number of iterations to be performed
-}
+// while (true) {
+//   //do something
+//   //use when we dont know the number of iterations to be performed
+// }

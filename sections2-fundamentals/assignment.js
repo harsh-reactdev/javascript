@@ -41,7 +41,7 @@ for (let i = 0; i <= arr.length; i++) {
 const str = 'fossil';
 const occ = {};
 
-for(i =0; i<str.length; i++){
+for (i = 0; i < str.length; i++) {
   occ[str[i]] = Object.keys(occ).includes(str[i]) ? ++occ[str[i]] : 1;
 }
 
@@ -56,15 +56,15 @@ const newObj = new Object({
   name: 'Harsh',
   birthyear: 2000,
   job: 'Frontend web developer',
-  friends: ['Akhil', 'Abhijna', 'Puneeth', 'Mahesh', 'Jeevan' ],
+  friends: ['Akhil', 'Abhijna', 'Puneeth', 'Mahesh', 'Jeevan'],
   hasDL: true,
 
-  calcAge: function() {
+  calcAge: function () {
     this.age = 2024 - this.birthyear;
     return this.age;
   }, //this keyword here points to newObj
 
-  getSummary: function() {
+  getSummary: function () {
     this.summary = `This is ${this.name}, a ${this.age} years old ${this.job}. He's got ${this.friends.length} friends and they are ${this.friends} . ${this.hasDL ? `He has an active drivers license` : ''}.`;
     return this.summary;
   }
@@ -75,3 +75,42 @@ newObj.calcAge();
 newObj.getSummary();
 // console.log(newObj.age);
 // console.log(newObj.summary);
+
+
+// --------------- Temp amplitude calculator
+
+const tempArr = [-2, 11, 4, 18, 22, 'error', 35, 6, 29, -3];
+
+const calcTempAmpl = function (t1, t2) {
+  const mergedArr = t1.concat(t2);
+
+  let max = mergedArr[0];
+  let min = mergedArr[0];
+
+  for (i = 1; i < mergedArr.length; i++) {
+    const arrItem = mergedArr[i];
+    if (arrItem === 'error') continue;
+    max = arrItem > max ? arrItem : max;
+    min = arrItem < min ? arrItem : min;
+  }
+
+  return max - min;
+};
+
+// console.log(calcTempAmpl(tempArr));
+
+// ----------------- temp forecast
+
+const printForecast = function (arr) {
+  let forecastStr = '';
+
+  for (let i = 0; i < arr.length; i++) {
+    forecastStr += `... ${arr[i]}°C in ${i + 1} days `;
+  }
+
+  return forecastStr;
+};
+
+const tempArr2 = [26, 22, 17, 32];
+
+console.log(printForecast(tempArr2));

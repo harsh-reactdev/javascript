@@ -20,7 +20,7 @@ const bmiHarsh = calcBMI(54, 1.73).toFixed(2);
 
 // Average calculator for an array of numbers
 
-const calcAvg = (arr) => {
+const calcAvg = arr => {
   let sum = 0;
   for (let i = 0; i < arr.length; i++) {
     sum += arr[i];
