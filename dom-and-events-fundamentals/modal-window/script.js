@@ -26,6 +26,11 @@ const onModalClose = function () {
     overlay.classList.add('hidden');
 };
 
+const closeModalOnEsc = function (e) {
+    if (e.key === 'Escape' && !modalWindow.classList.contains('hidden')) onModalClose();
+};
+
+addEventHandler(document, 'keydown', closeModalOnEsc);
 addEventHandler(closeModalBtn, 'click', onModalClose);
 addEventHandler(overlay, 'click', onModalClose);
 
