@@ -4,12 +4,12 @@
 // const score0El = document.getElementById('score--0');
 // const score1El = document.getElementById('score--1');
 
+// const currentScore0El = document.getElementById('current--0');
+// const currentScore1El = document.getElementById('current--1');
+
 const players = [
     document.querySelector('.player--0'), document.querySelector('.player--1')
 ];
-
-// const currentScore0El = document.getElementById('current--0');
-// const currentScore1El = document.getElementById('current--1');
 
 const newGameBtn = document.querySelector('.btn--new');
 const rollDiceBtn = document.querySelector('.btn--roll');
@@ -38,7 +38,7 @@ const playersObj = [
 let diceNum;
 let currentPlayer = 0;
 
-//hof
+//event handler attaching function
 const addEventHandler = function (elem, event, callback) {
     elem.addEventListener(event, callback);
 };
@@ -51,7 +51,6 @@ const init = function () {
     }
 
     diceImgEL.style.display = 'none';
-
     currentPlayer = 0;
 };
 
