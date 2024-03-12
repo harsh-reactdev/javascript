@@ -37,6 +37,7 @@ const playersObj = [
 //global variables
 let diceNum;
 let currentPlayer = 0;
+let isPlaying = true;
 
 //event handler attaching function
 const addEventHandler = function (elem, event, callback) {
@@ -50,8 +51,10 @@ const init = function () {
         playersObj[i].currentScore = 0;
         playersObj[i].currentScoreEl.textContent = 0;
         playersObj[i].scoreEl.textContent = 0;
-        // players[i].classList.remove('player--winner');
+        players[i].classList.remove('player--winner');
     }
+
+    isPlaying = true;
 
     diceImgEL.style.display = 'none';
     currentPlayer = 0;
@@ -74,17 +77,19 @@ const checkWin = function () {
     //     init();
     // }
     if (playersObj[currentPlayer].score >= 20) {
+        isPlaying = false;
         alert(`Player ${currentPlayer} won.! 🥳`);
-        // diceImgEL.style.display = 'none';
-        // players[currentPlayer].classList.add('player--winner');
-        init();
+        diceImgEL.style.display = 'none';
+        players[currentPlayer].classList.add('player--winner');
+        // init();
     }
 };
 
 const togglePlayer = function () {
-    players[currentPlayer].classList.remove('player--active');
+    // players[currentPlayer].classList.remove('player--active');
     currentPlayer = currentPlayer === 0 ? 1 : 0;
-    players[currentPlayer].classList.add('player--active');
+    players[0].classList.toggle('player--active');
+    players[1].classList.toggle('player--active');
 };
 
 const clearCurrentScore = function () {
@@ -126,24 +131,28 @@ const holdScore = function () {
     //     score1El.textContent = Number(score1El.textContent) + Number(currentScore1El.textContent);
     //     currentScore1El.textContent = 0;
     // }
-    playersObj[currentPlayer].score += playersObj[currentPlayer].currentScore;
-    updateUI('scoreEl', 'score');
-    playersObj[currentPlayer].currentScore = 0;
-    updateUI('currentScoreEl', 'currentScore');
+    if (isPlaying) {
+        playersObj[currentPlayer].score += playersObj[currentPlayer].currentScore;
+        updateUI('scoreEl', 'score');
+        playersObj[currentPlayer].currentScore = 0;
+        updateUI('currentScoreEl', 'currentScore');
 
-    checkWin();
-    togglePlayer();
+        checkWin();
+        togglePlayer();
+    }
 
 };
 
 //rolling dice
 const rollDice = function () {
-    diceImgEL.style.display = 'block';
-    diceNum = Math.trunc(Math.random() * 6) + 1;
-    // diceImgEL.setAttribute('src', `./content/dice-${diceNum}.png`); //another way
-    diceImgEL.src = `./content/dice-${diceNum}.png`;
+    if (isPlaying) {
+        diceImgEL.style.display = 'block';
+        diceNum = Math.trunc(Math.random() * 6) + 1;
+        // diceImgEL.setAttribute('src', `./content/dice-${diceNum}.png`); //another way
+        diceImgEL.src = `./content/dice-${diceNum}.png`;
 
-    handleCurrentScore();
+        handleCurrentScore();
+    }
 };
 
 //Attch event listeners
