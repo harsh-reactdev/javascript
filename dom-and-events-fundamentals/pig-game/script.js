@@ -80,7 +80,6 @@ const checkWin = function () {
 
 const togglePlayer = function () {
     players[currentPlayer].classList.remove('player--active');
-    // diceImgEL.style.display = 'none';
     currentPlayer = currentPlayer === 0 ? 1 : 0;
     players[currentPlayer].classList.add('player--active');
 };
