@@ -50,6 +50,7 @@ const init = function () {
         playersObj[i].currentScore = 0;
         playersObj[i].currentScoreEl.textContent = 0;
         playersObj[i].scoreEl.textContent = 0;
+        // players[i].classList.remove('player--winner');
     }
 
     diceImgEL.style.display = 'none';
@@ -72,8 +73,10 @@ const checkWin = function () {
     //     alert('Player 2 won.!');
     //     init();
     // }
-    if (playersObj[currentPlayer].score >= 100) {
+    if (playersObj[currentPlayer].score >= 20) {
         alert(`Player ${currentPlayer} won.! 🥳`);
+        // diceImgEL.style.display = 'none';
+        // players[currentPlayer].classList.add('player--winner');
         init();
     }
 };
