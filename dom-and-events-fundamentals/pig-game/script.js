@@ -46,6 +46,8 @@ const addEventHandler = function (elem, event, callback) {
 // initialisation / reset
 const init = function () {
     for (let i = 0; i < 2; i++) {
+        playersObj[i].score = 0;
+        playersObj[i].currentScore = 0;
         playersObj[i].currentScoreEl.textContent = 0;
         playersObj[i].scoreEl.textContent = 0;
     }
@@ -78,6 +80,7 @@ const checkWin = function () {
 
 const togglePlayer = function () {
     players[currentPlayer].classList.remove('player--active');
+    // diceImgEL.style.display = 'none';
     currentPlayer = currentPlayer === 0 ? 1 : 0;
     players[currentPlayer].classList.add('player--active');
 };
