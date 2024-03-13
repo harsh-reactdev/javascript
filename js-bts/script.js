@@ -46,6 +46,8 @@ function calcAge(birthyear) {
 const fName = 'harsh';
 // calcAge(2000);
 
+
+// --------------------------------
 // Hoisting and temporal dead zone
 
 let a = 10;
@@ -76,3 +78,7 @@ let z = 3;
 // console.log(z === window.z); //false
 
 // variables declared with var, creates a property in the window object and the ones declared with let/const doesn't
+
+
+// -----------------------------------------------------
+// The 'this' keybord
