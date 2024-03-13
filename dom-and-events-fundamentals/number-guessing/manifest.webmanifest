@@ -1,0 +1,14 @@
+{
+    "icons": [
+        {
+            "src": "img/Guess-a1.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "img/Guess-a2.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ]
+}
