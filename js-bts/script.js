@@ -71,8 +71,8 @@ var x = 1;
 const y = 2;
 let z = 3;
 
-console.log(x === window.x); //true
-console.log(y === window.y); //false
-console.log(z === window.z); //false
+// console.log(x === window.x); //true
+// console.log(y === window.y); //false
+// console.log(z === window.z); //false
 
 // variables declared with var, creates a property in the window object and the ones declared with let/const doesn't
