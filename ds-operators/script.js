@@ -16,6 +16,11 @@ const restaurant = {
     return [this.starterMenu[starter], this.mainMenu[mainCourse]];
   },
 
+  // we can destructure arguments sent as an object directly in the functions
+  orderDelivery: function ({ starter, main, address, time }) {
+    console.log(`Order received for ${this.starterMenu[starter]} and ${this.mainMenu[main]}. Order will be delivered by ${time} to ${address}`);
+  },
+
   openingHours: {
     thu: {
       open: 12,
@@ -31,6 +36,13 @@ const restaurant = {
     },
   },
 };
+
+restaurant.orderDelivery({
+  time: '22.30',
+  address: '36, Blr-73',
+  starter: 2,
+  main: 2
+});
 
 const arr = [2, 3, 4, 5];
 const [a, b, c] = arr; //assigns the first 3 elements of the array to a, b and c respectively
@@ -271,3 +283,30 @@ const [[, rating], [, ratingsCount]] = ratings;
 const ratingStars = [63405, 1808];
 const [fiveStarRatings, oneStarRatings, threeStarRatings = 0] = ratingStars;
 // console.log(fiveStarRatings, oneStarRatings, threeStarRatings);
+
+// ---------------------------------------------------------
+// destructuring objects
+const { name, openingHours, categories } = restaurant;
+// console.log(name, openingHours, categories);
+
+// to give property a different name
+const { name: restaurantName } = restaurant;
+// console.log(restaurantName);
+
+
+// default values
+const { bestselling = [] } = restaurant;
+// console.log(bestselling);
+
+// mutating variables
+let ab = 100;
+let cd = 999;
+
+const testObj = { ab: 25, cd: 45, ef: 76 };
+
+({ ab, cd } = testObj);// we need to wrap the destructuring syntax inside parenthesis in order to reassign different values to variables
+
+// nested objects destructuring
+const { fri: { open, close } } = openingHours;
+// console.log(open, close);
+
