@@ -21,6 +21,15 @@ const restaurant = {
     console.log(`Order received for ${this.starterMenu[starter]} and ${this.mainMenu[main]}. Order will be delivered by ${time} to ${address}`);
   },
 
+  orderPasta: function (ing1, ing2, ing3) {
+    console.log(`This is your pasta with ${ing1}, ${ing2} and ${ing3}.`);
+  },
+
+  orderPizza: function (mainIng, ...otherIngs) {
+    console.log(mainIng);
+    console.log(otherIngs);
+  },
+
   openingHours: {
     thu: {
       open: 12,
@@ -37,12 +46,19 @@ const restaurant = {
   },
 };
 
-restaurant.orderDelivery({
-  time: '22.30',
-  address: '36, Blr-73',
-  starter: 2,
-  main: 2
-});
+// restaurant.orderDelivery({
+//   time: '22.30',
+//   address: '36, Blr-73',
+//   starter: 2,
+//   main: 2
+// });
+
+// const ings = [prompt('Make your pasta; Enter ingredient 1 : '), prompt('Enter ingredient 2 : '), prompt('Enter ingredient 3 : ')];
+// console.log(ings);
+// restaurant.orderPasta(...ings);
+
+// restaurant.orderPizza('Chicken pepperoni', 'chilli flakes', 'jalapeno', 'blueberry');
+// restaurant.orderPizza('mushrooms');
 
 const arr = [2, 3, 4, 5];
 const [a, b, c] = arr; //assigns the first 3 elements of the array to a, b and c respectively
@@ -310,3 +326,66 @@ const testObj = { ab: 25, cd: 45, ef: 76 };
 const { fri: { open, close } } = openingHours;
 // console.log(open, close);
 
+
+// -------------------------------------------------------------
+// The spread operator
+
+const spreadArr = [12, 34, 23, 45];
+const dumbArr = [1, 2, ...spreadArr];
+// here ...spreadArr unpacks all the elements in the array spreadArr and writes them individually into dumbArr
+
+// console.log(dumbArr);
+
+// copy array
+const mainMenuCopy = [...restaurant.mainMenu];
+mainMenuCopy.push('masaaldose');
+// console.log(mainMenuCopy);
+
+const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+// console.log(menu);
+
+
+// spread works on all iterables: arrays, strings, maps/sets. BUT NOT OBJECTS (works post ES2018)
+// spread on strings
+const spreadStr = 'harsh';
+// console.log(...spreadStr);
+
+// Objects
+const spreadObj = { founder: 'harsh', ...restaurant, foundedIn: 2024 };
+
+spreadObj.name = 'harsh\'s eateries'; //proves that it creates a shallow copy
+
+// console.log(spreadObj);
+// console.log(restaurant);
+
+
+// ----------------------------------------------------
+// rest operator
+
+const [first, second, ...others] = [1, 22, 45, 23, 43, 67, 86];
+// console.log(first, second, others);
+
+const [food1, food2, ...restMenu] = [...restaurant.starterMenu, ...restaurant.mainMenu];
+// console.log(food1, food2, restMenu);
+// packs individual elements into an array
+
+
+// works for objects too
+const { sat, ...weekdays } = openingHours;
+// console.log(sat, weekdays);
+
+// strings
+const [q, w, ...restOfStr] = 'Harsh';
+// console.log(q, w, restOfStr);
+
+const addRest = function (...numbers) {
+  // console.log(numbers); numbers will be an array
+  let sum = 0;
+
+  for (let i = 0; i < numbers.length; i++) sum += numbers[i];
+  console.log(sum);
+};
+
+// addRest(1, 2, 4, 54, 56);
+// addRest(1, 1);
+// addRest(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
