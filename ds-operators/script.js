@@ -389,3 +389,41 @@ const addRest = function (...numbers) {
 // addRest(1, 2, 4, 54, 56);
 // addRest(1, 1);
 // addRest(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
+// Destructuring Objects assignment
+// 2.1
+// const [{ title, ISBN, author }] = books;
+// console.log(title, author, ISBN);
+
+// 2.2
+const [{ keywords: tags }] = books;
+// console.log(tags);
+
+// 2.3
+const { language, programmingLanguage = 'unknown' } = books[6];
+// console.log(language, programmingLanguage);
+
+// 2.4
+let bookTitle = 'unknown';
+let bookAuthor = 'unknown';
+// console.log(bookTitle, bookAuthor);
+({ title: bookTitle, author: bookAuthor } = books[0]);
+// console.log(bookTitle, bookAuthor);
+
+// 2.5
+const { thirdParty: { goodreads: { rating: bookRating } } } = books[0];
+// console.log(bookRating);
+
+// 2.6
+const printBookInfo = function ({ title, author, year = 'Year Unknown' }) {
+  console.log(`${title} by ${author}, ${year}`);
+};
+
+// printBookInfo({ title: 'Meditations', author: 'Marcus Aurelius' });
+
+
+// spread operator
+// 3.1
+const [book1, book2] = books;
+const bookAuthors = [...book1.author, ...book2.author];
+// console.log(bookAuthors);
