@@ -427,3 +427,45 @@ const printBookInfo = function ({ title, author, year = 'Year Unknown' }) {
 const [book1, book2] = books;
 const bookAuthors = [...book1.author, ...book2.author];
 // console.log(bookAuthors);
+
+// 3.2
+const spellWord = function (spreadStr) {
+  console.log(...spreadStr);
+};
+
+// spellWord('javascript');
+
+// rest patterns
+// 4.1 
+const { keywords: [mainKeyword, ...rest] } = books[0];
+// console.log(mainKeyword, rest);
+
+// 4.2
+const { publisher: bookPublisher, ...restOfTheBook } = books[1];
+// console.log(bookPublisher, restOfTheBook);
+
+// 4.3
+const printBookAuthorsCount = function (title, ...authors) {
+  console.log(`The book ${title} has ${authors.length} authors.`);
+};
+// printBookAuthorsCount('harsh', 'harsh', 'myself');
+
+
+// -------------------------------------------------------------------
+// short circuiting && and ||
+
+// console.log('' || 'harsh'); //returns 'harsh
+// console.log(true || 0); //returns true
+// console.log(undefined || null); //returns null although null is a falsy value
+// console.log(undefined || 0 || '' || 'harsh' || 7 || true);
+
+const noValue = '';
+const firstTruthyValue = noValue || 10;
+// console.log(firstTruthyValue);
+
+// AND
+
+console.log('' && 'harsh'); //returns ''
+console.log(true && 0 && 'harsh'); //returns true
+console.log(undefined && null); //returns null although null is a falsy value
+console.log('harsh' && 3 && true && false && 7); //retruns false
