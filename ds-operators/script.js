@@ -465,7 +465,16 @@ const firstTruthyValue = noValue || 10;
 
 // AND
 
-console.log('' && 'harsh'); //returns ''
-console.log(true && 0 && 'harsh'); //returns true
-console.log(undefined && null); //returns null although null is a falsy value
-console.log('harsh' && 3 && true && false && 7); //retruns false
+// console.log('' && 'harsh'); //returns ''
+// console.log(true && 0 && 'harsh'); //returns true
+// console.log(undefined && null); //returns null although null is a falsy value
+// console.log('harsh' && 3 && true && false && 7); //retruns false
+
+// ------------------------------------------------------------------
+// Nullish coalescing operator ( ?? )
+const nullishA = 0;
+let nullishB = nullishA || 10; //assigns first truthy value
+// console.log(nullishB);
+
+nullishB = nullishA ?? 10;// assigns the first non nullish value else simply the last value
+// console.log(nullishB); 
