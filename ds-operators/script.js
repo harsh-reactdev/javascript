@@ -478,3 +478,38 @@ let nullishB = nullishA || 10; //assigns first truthy value
 
 nullishB = nullishA ?? 10;// assigns the first non nullish value else simply the last value
 // console.log(nullishB); 
+
+// ------------------------------------------------------------------
+const logObj1 = {
+  name: 'hatti kapi',
+  numGuests: 0
+};
+
+const logObj2 = {
+  name: 'CCD',
+  owner: 'some guy'
+};
+
+// OR assignment operator
+// logObj1.numGuests ||= 10;
+// logObj2.numGuests ||= 10;
+
+// console.log(logObj1); already has the numGuest value as a truthy value
+// console.log(logObj2); assigns value of 10 as numGuests isnt present here;
+
+// nullish assignment operator
+// logObj1.numGuests ??= 10; //assigns 10 if numGuests is nullish value
+// logObj2.numGuests ??= 10; //assigns 10 if numGuests is nullish value
+
+// console.log(logObj1);
+// console.log(logObj2);
+
+// AND assignment
+// use to replace a truthy value
+logObj1.owner &&= '<Anonymous>';
+logObj2.owner &&= '<Anonymous>';
+// console.log(logObj1);
+// console.log(logObj2);
+
+// ------------------------------------------------------------------
+// for of loop
