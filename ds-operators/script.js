@@ -513,3 +513,72 @@ logObj2.owner &&= '<Anonymous>';
 
 // ------------------------------------------------------------------
 // for of loop
+
+const forOfArr = [1, 2, 4, 4, 5, 6, 6, 7, 0];
+
+for (const item of forOfArr) {
+  // if (item === 4) continue;
+  // if (item === 6) break;
+  // can use break and continue in for of loop
+  // console.log(item);
+};
+
+// for of loop only gives access to each item of the array. But to get access to the index of the current item :
+for (const item of forOfArr.entries()) {
+  // console.log(item);
+};
+
+for (const [index, item] of forOfArr.entries()) { //can destructure each entry inside the loop syntax too
+  // console.log(index, item);
+}
+
+// console.log(forOfArr.entries()); //an array iterator, gives back an array of entries in the form of seperate arrays each holding index and value [index, vaue]
+
+
+// ------------------------------------------------------------------
+// Enhanced object literals
+
+const outer = {
+  a: 'a',
+  b: 'b',
+  c: 'c'
+};
+
+const mainObj = {
+  alpha: 'A-Za-z',
+
+  outer, //here simply the object name will create a property with the same name as the outer object and store its value in it
+
+  orderFood() { //no need to write orderFood : function() { func. body } we can eliminate the function keyword
+    console.log('your food has been ordered');
+  },
+
+  [`alpha-${outer.a}`]/*we can add any expression inside a square brackets for property names, so it computes values and use it as the property name*/: 'outer a'
+
+};
+
+// ------------------------------------------------------------------
+// Optional chaining
+
+//here we check if the outer property exists in the main object and then if it exists we also check if property c exists inside this outer object and only if is true we log the property c on the console, which is not so readable
+if (mainObj.outer && mainObj.outer.c) {
+  // console.log(mainObj.outer.c);
+};
+
+// so, instead of long syntax, use optional chaining
+// console.log(mainObj.outer?.a);
+// logs a to the console only if a property called outer is present in the object
+
+// console.log(restaurant.openingHours?.fri?.open);
+// logs 'open' value to the console only if opening hours is present and only if fri exists on the openingHours property
+
+const outerOrder = mainObj.orderFoo?.() && 'method doesnt exist';
+// console.log(mainObj.orderFood?.() ?? 'method doesnt exist');
+// here only if  orderFood method exists only then the method will be called
+
+
+// works on arrays too
+const opChArr = ['me', 'tumm', 'sinch', [2, 3, 4]];
+// console.log(opChArr?.[3]?.[2]);
+
+// ------------------------------------------------------------------
