@@ -581,4 +581,34 @@ const outerOrder = mainObj.orderFoo?.() && 'method doesnt exist';
 const opChArr = ['me', 'tumm', 'sinch', [2, 3, 4]];
 // console.log(opChArr?.[3]?.[2]);
 
-// ------------------------------------------------------------------
+//------------------------------------------------------------------
+// looping objects
+
+// looping over array of property names (keys) of an object
+const numOfOpenDays = Object.keys(openingHours);
+let openStr = `We are open on ${numOfOpenDays.length} days : `;
+for (const day of Object.keys(openingHours)) {
+  openStr += `${day} `;
+};
+
+// console.log(openStr);
+
+// looping over array of values of an object
+const openVals = Object.values(openingHours);
+let openValStr = '';
+
+for (const { open, close } of openVals) {
+  openValStr += `Opens at ${open}, closes at ${close}\n`;
+}
+// console.log(openValStr);
+
+// looping over entries of an object
+// const testObj12 = { a: 'a', b: 'b' };
+const openEntries = Object.entries(openingHours);
+// console.log(openEntries);
+let actualOpenStr = '';
+for (const [key, { open, close }] of openEntries) {
+  // console.log(key, `opens at : ${open}`, `closes at : ${close}`);
+  actualOpenStr += `On ${key}, we open at ${open} and close by ${close}.\n`;
+}
+// console.log(actualOpenStr);
