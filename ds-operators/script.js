@@ -737,3 +737,61 @@ for (const [key, value] of question) {
 // CONVERT A MAP BACK TO ARRAY
 const newQuestionArray = [...question];
 // console.log(newQuestionArray);
+
+
+//------------------------------------------------------------------
+// Working with strings
+const airline = 'Akasa Air';
+const plane = 'A280';
+
+// console.log(plane[0]);
+// console.log('B737'[0]); //still works
+// console.log(typeof plane[1]); //still a string, but can be converted
+// console.log(plane.length); //returns no. of characters in the string
+
+// // indexOf()
+// console.log(airline.indexOf('8')); //returns the index of first occurance of the specified character in the string
+// console.log(airline.lastIndexOf('A')); //index of last occurance 
+
+// console.log(airline.indexOf('Air')); //returns index of word, if present
+
+// console.log(airline.slice(6)); // returns Air
+// console.log(airline.slice(0, 5)); // returns substring from 0th index to 4th index
+
+// console.log(airline.slice(0, airline.indexOf(' '))); //extracting the first word of the string, using the space between words
+
+// console.log(airline.slice(airline.lastIndexOf(' ') + 1)); //extracting the last word of the string
+
+// check middle seat
+const checkMiddleSeat = function (seat) {
+  // seats ending with B and E are middlle seats
+  const seatColumn = seat.slice(-1);
+  if (seatColumn === 'B' || seatColumn === 'E')
+    console.log('You\'ve got the middle seat');
+  else console.log('Lucky you.!');
+};
+
+// checkMiddleSeat('33B');
+// checkMiddleSeat('33E');
+// checkMiddleSeat('33C');
+
+
+//------------------------------------------------------------------
+const upper = 'miO teRAki';
+const lower = upper.toLowerCase();
+const capitalised = lower[0].toUpperCase() + lower.slice(1, lower.indexOf(' ')) + ' ' + lower[lower.indexOf(' ') + 1].toUpperCase() + lower.slice(lower.indexOf(' ') + 2);
+// console.log(capitalised);
+
+
+// replacing
+const billInr = 'Rs.8000';
+const billUS = billInr.replace('Rs.', '$');
+// console.log(billUS);
+
+// can also replace words / substrings
+const announcement = 'Bhakthadigalu elliddira, Bhakthadigalu bandu anna prasada abekagi vinanthi';
+// console.log(announcement.replace('anna prasada', 'kaayi prasada')); // works like a charm
+// console.log(announcement.replaceAll('Bhakthadigalu', 'Devotees')); //replaces all occurances of search string
+
+
+
