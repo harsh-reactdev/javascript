@@ -612,3 +612,128 @@ for (const [key, { open, close }] of openEntries) {
   actualOpenStr += `On ${key}, we open at ${open} and close by ${close}.\n`;
 }
 // console.log(actualOpenStr);
+
+//------------------------------------------------------------------
+// Sets
+
+const orderSet = new Set(['pasta', 'pizza', 'risotto', 'pasta', 'pizza']);
+// console.log(orderSet); //duplicates wont be present
+
+const strSet = new Set('lupin'); //strings are iterables too
+// console.log(strSet);
+
+// check size of set
+// console.log(orderSet.size); //returns 3, the no. of all the unique elements present in the set
+
+// check if element is present in set
+// console.log(orderSet.has('pizza')); //returns true
+// console.log(orderSet.has('banana')); //returns false
+
+// add elements to set
+orderSet.add('masaaldose');
+// console.log(orderSet);
+
+// delete elements from set
+orderSet.delete('pizza');
+// console.log(orderSet);
+
+// sets are iterables too, meaning we can loop over them
+for (const order of orderSet) {
+  // console.log(order);
+}
+
+// To create an unique array out of a normal array containing duplicate values
+const badArray = ['a', 'b', 'c', 'd', 'a', 'c'];
+
+const goodSet = new Set(badArray);
+// console.log(goodSet); //prints a unique set
+//removes all duplications from the passed array and creates a set of all unique values
+
+// in order to convert a set to an array, its pretty easy. The spread operator works on all iterables, meaning sets too
+
+const goodArray = [...new Set(goodSet)]; //converts back to array
+// console.log(goodArray);
+
+
+//------------------------------------------------------------------
+const restMap = new Map();
+
+restMap.set('1', 'harsh');
+restMap.set('2', 'tummu'); //calues can be added 
+
+// or ALSO like this
+
+restMap.set(true, 'orderedIn').set(false, 'we dint have food');
+
+// so,
+// console.log(restMap); //will hold all the values added in the previous line
+
+// map.get(key) method, returns the value of the key in the map with which we call the get method
+// console.log(restMap.get('1'));
+// console.log(restMap.get(false));
+
+const openMap = new Map();
+openMap.set('name', 'happycloud coffee').set('open', 11).set('close', 23).set(true, 'We are open').set(false, 'We are closed');
+// console.log(openSet);
+
+const time = 11;
+
+// if (time >= openMap.get('open') && time < openMap.get('close')) {
+// console.log(openMap.get(true));
+// } else console.log(openMap.get(false));
+// console.log(openMap.get(time >= openMap.get('open') && time < openMap.get('close')));
+
+const delMapItem = openMap.delete(true); //deletes the item with the specified key and returns true, false if item isn't found in the map
+// console.log(delMapItem);
+
+const mapSize = openMap.size;
+// console.log(mapSize);
+
+openMap.clear(); //deletes everything in the map
+// console.log(openMap);
+
+// using arrays as map keys
+const mapKeyArr = ['happy', 'cloud'];
+
+openMap.set(mapKeyArr, 'happycloud');
+
+// console.log(openMap.get(mapKeyArr));
+// console.log(openMap);
+
+
+//------------------------------------------------------------------
+// Maps Iteration
+
+const question = new Map([
+  ['question', 'Which is the most famous programming language in the world ?'],
+  [1, 'C'],
+  [2, 'Java'],
+  [3, 'Javascript'],
+  ['Correct', 3],
+  [true, 'Correct answer.!'],
+  [false, 'Try again.!'],
+]);
+
+// console.log(question);
+
+// convert objects to maps
+const openingHoursMap = Object.entries(openingHours);
+// console.log(openingHoursMap);
+
+
+// console.log(question.get('question'));
+// iterating maps
+for (const [key, value] of question) {
+  // console.log(key, value);
+  if (typeof key === 'number') {
+    // console.log(`Answer (${key}) : ${value}`);
+  }
+}
+// const answer = Number(prompt('Type your answer : '));
+// console.log(answer);
+// const isCorrect = answer === question.get('Correct');
+// console.log(question.get(answer === question.get('Correct')));
+
+// CONVERT A MAP BACK TO ARRAY
+const newQuestionArray = [...question];
+// console.log(newQuestionArray);
