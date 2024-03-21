@@ -793,5 +793,82 @@ const announcement = 'Bhakthadigalu elliddira, Bhakthadigalu bandu anna prasada 
 // console.log(announcement.replace('anna prasada', 'kaayi prasada')); // works like a charm
 // console.log(announcement.replaceAll('Bhakthadigalu', 'Devotees')); //replaces all occurances of search string
 
+// console.log(airline.includes('Air')); //returns boolean
+
+// console.log(airline.startsWith('Aka')); //returns boolean
+
+// console.log(airline.endsWith('Air')); //returns boolean
+
+const checkBaggage = function (items) {
+  const itemStr = items.toLowerCase();
+  if (itemStr.includes('knife') || itemStr.includes('gun')) {
+    console.log('Sorry, you can\'t board the plane.');
+  } else console.log('Thank you. Please move to the gates.');
+};
+
+// checkBaggage('I have some food, my ipad and a gun for my protection.');
+
+// checkBaggage('I have my wallet and my phone.')
 
 
+// split and join
+// console.log('Hello there, young boy.!'.split(' '));
+// console.log(['hi', 'harsh'].join(' '));
+
+
+// capitalise the strings, assuming the strings sent as arguments are a string of names seperated by spaces
+const capitaliseNames = function (inpName) {
+  console.log(`Input name string : ${inpName}`);
+  const names = inpName.split(' ');
+  let arrUpper = [];
+  for (let name of names) {
+    // arrUpper.push(name[0].toUpperCase() + name.slice(1));
+    arrUpper.push(name.replace(name[0], name[0].toUpperCase()));
+  }
+  console.log(`Capitalised string : ${arrUpper.join(' ')}`);
+};
+
+// capitaliseNames('harshith shetty');
+// capitaliseNames('ramesh madivalaru thimmashetty');
+// capitaliseNames('bhagyamma kullappa');
+// capitaliseNames('sinchana shetty');
+
+
+//------------------------------------------------------------------
+// padding a string
+const greetMe = 'Hey harsh.!';
+// console.log(greetMe.padStart(20, '*').padEnd(29, '*'));
+
+
+// mask credit cards
+const maskCreditCards = function (cardNum) {
+  const actualNum = String(cardNum);
+  let lastNum = actualNum.slice(-4);
+  console.log(lastNum.padStart(actualNum.length, '*'));
+};
+
+// maskCreditCards('1234567898765432');
+// maskCreditCards(17265387461723872);
+
+// console.log('hey '.repeat(5));
+
+// 5.1
+const hasExamplesInJava = function (book) {
+  const { programmingLanguage } = book;
+  return programmingLanguage === 'Java' || 'no data available';
+};
+
+// console.log(hasExamplesInJava(books[3]));
+
+// 5.2
+for (const book of books) {
+  const { onlineContent, title } = book;
+  // onlineContent && console.log(`${title} provides online content.`);
+}
+
+// 6.1
+for (const book of books) {
+  const { onlineContent, title } = book;
+  // console.log(onlineContent);
+  // onlineContent ?? console.log(`${title} provides no data about its online content`);
+}
