@@ -872,3 +872,71 @@ for (const book of books) {
   // console.log(onlineContent);
   // onlineContent ?? console.log(`${title} provides no data about its online content`);
 }
+
+// 7.1 and 7.2
+for (let book of books) {
+  let { highlighted, thirdParty: { goodreads: { rating } } } = book;
+  book.edition || 1;
+  highlighted &&= rating < 4.2;
+  // console.log(book);
+  // console.log(onlineContent);
+  // onlineContent ?? console.log(`${title} provides no data about its online content`);
+}
+
+// 8
+let pageSum = 0;
+const allAuthors = [];
+for (let { pages, author } of books) {
+  pageSum += pages;
+
+  if (typeof author !== 'string') {
+    for (const eachAuthor of author) {
+      // console.log(eachAuthor);
+      allAuthors.push(eachAuthor);
+    }
+  } else allAuthors.push(author);
+}
+
+for (let [index, author] of allAuthors.entries()) {
+  // console.log(`${index + 1}. ${author}`);
+}
+
+// console.log(allAuthors);
+
+
+// 9
+const bookData = [
+  ['title', 'Computer Networking: A Top-Down Approach'],
+  ['author', ['James F. Kurose', 'Keith W. Ross']],
+  ['publisher', 'Addison Wesley'],
+];
+const pages = 880;
+
+const newBook = {
+  pages,
+};
+
+for (let [prop, val] of bookData) {
+  newBook[prop] = val;
+  // console.log(prop);
+}
+
+// console.log(newBook);
+
+
+// 10
+const getFirstKeyword = function (book) {
+  return book.keywords?.[0];
+};
+
+const firstKeyword = getFirstKeyword(books[0]);
+// console.log(firstKeyword);
+
+
+// 11
+const entries = [];
+
+for (const keyName of Object.keys(books[0].thirdParty.goodreads)) {
+  entries.push([keyName]);
+}
+console.log(entries);
