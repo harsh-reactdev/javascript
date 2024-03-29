@@ -924,7 +924,7 @@ for (let [prop, val] of bookData) {
 // console.log(newBook);
 
 
-// 10
+// 10 - optional chaining
 const getFirstKeyword = function (book) {
   return book.keywords?.[0];
 };
@@ -933,10 +933,97 @@ const firstKeyword = getFirstKeyword(books[0]);
 // console.log(firstKeyword);
 
 
-// 11
+// 11 - looping through Objects
 const entries = [];
 
 for (const keyName of Object.keys(books[0].thirdParty.goodreads)) {
   entries.push([keyName]);
 }
-console.log(entries);
+
+for (const [index, value] of Object.values(books[0].thirdParty.goodreads).entries()) {
+  entries[index].push(value);
+}
+
+const entries2 = Object.entries(books[0].thirdParty.goodreads);
+// console.log(entries);
+// console.log(entries2);
+
+
+// 12 - Sets
+const allKeywords = [];
+
+for (const { keywords } of books) {
+  allKeywords.push(...keywords); //destructures keywords if its an array and then pushes each of them or simply pushes keywords if not
+}
+
+const uniqueKeywords = new Set(allKeywords);
+// console.log(uniqueKeywords);
+// console.log(allKeywords);
+
+uniqueKeywords.add('coding');
+uniqueKeywords.add('science');
+
+uniqueKeywords.delete('business');
+
+// console.log(uniqueKeywords);
+
+const arrayFromSets = [...uniqueKeywords];
+
+uniqueKeywords.clear(); //deletes everything from set
+
+// console.log(uniqueKeywords);
+
+
+// 13 - Maps
+const bookMap = new Map([['title', 'Clean Code'], ['author', 'Robert C. Martin']]);
+
+bookMap.set('pages', 464);
+
+// console.log(`${bookMap.get('title')} by ${bookMap.get('author')}`);
+
+// console.log(bookMap.size); //returns the size of the map
+
+// console.log(`${bookMap.has('author') && 'The author of the book is known'}`);
+
+
+// 14 - Maps : iteration
+const firstBookMap = new Map(Object.entries(books[0]));
+
+for (const [key, val] of firstBookMap) {
+  // console.log(key, val);
+  if (typeof val === 'number') {
+    // console.log(key);
+  }
+}
+
+// strings - 1
+const { ISBN } = books[0];
+// console.log(ISBN[6], ISBN[4], ISBN[9], ISBN[8]);
+
+const quote = 'A computer once beat me at chess, but it was no match for me at kick boxing';
+
+// console.log(quote.indexOf('chess'));
+
+// console.log(quote.slice(-6));
+
+const isContributor = function (author) {
+  const lower = author.toLowerCase();
+  return lower.includes('(contributor)');
+};
+
+// console.log(isContributor('harsh)'));
+
+const normalizeAuthorName = function (author) {
+  let lower = author.toLowerCase();
+  let authorName = '';
+
+  if (isContributor(author)) {
+    lower = lower.replace('(contributor)', ' ').trim();
+  }
+  let lowerArr = lower.split(' ');
+  authorName = `${lowerArr[0][0].toUpperCase() + lowerArr[0].slice(1) + ' ' + lowerArr[1][0].toUpperCase() + lowerArr[1].slice(1)}`;
+
+  console.log(authorName);
+};
+
+// normalizeAuthorName('hArsHiTH SHetTy (coNTriButor)');
