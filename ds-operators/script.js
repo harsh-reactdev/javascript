@@ -1013,6 +1013,9 @@ const isContributor = function (author) {
 
 // console.log(isContributor('harsh)'));
 
+
+// strings - 2
+
 const normalizeAuthorName = function (author) {
   let lower = author.toLowerCase();
   let authorName = '';
@@ -1027,3 +1030,72 @@ const normalizeAuthorName = function (author) {
 };
 
 // normalizeAuthorName('hArsHiTH SHetTy (coNTriButor)');
+
+const newBookTitle = books[1].title.replace('Programs', 'Software');
+// console.log(newBookTitle);
+
+const getWhatBookIsAbout = function (bookTitle) {
+  let about = '';
+
+  if (bookTitle.startsWith('computer')) {
+    about = 'This book is about computers';
+  }
+  else if (bookTitle.includes('algorithms') && bookTitle.includes('structures')) {
+    about = 'This book is about algorithms and data structures';
+  }
+  else if (!bookTitle.includes('operating') && (bookTitle.endsWith('system') || bookTitle.endsWith('systems'))) {
+    about = 'This book is about some systems, but definitely not about operating systems';
+  }
+
+  return about;
+};
+
+const logBookName = function (bookTitle) {
+  console.log(bookTitle);
+
+  const lowerTitle = bookTitle.toLowerCase();
+
+  console.log(getWhatBookIsAbout(lowerTitle));
+};
+
+// logBookName('algorithms and data structures');
+
+
+// strings - 3
+
+const logBookCategories = function (categopryString) {
+  const splitStr = categopryString.split(';');
+
+  for (let category of splitStr) {
+    console.log(category);
+  }
+};
+
+const bookCategories = 'science;computing;computer science;algorithms;business;operating systems;networking;electronics';
+// logBookCategories(bookCategories);
+
+
+
+const getKeywordsAsString = function () {
+  const keywords = [];
+
+  for (const book of books) {
+    keywords.push(...book.keywords);
+  }
+
+  const uniqueKeywords = [...new Set(keywords)];
+  const uniqueString = uniqueKeywords.join('; ');
+  console.log(uniqueString);
+
+};
+
+// getKeywordsAsString();
+const logBookChapters = function (bookChapters) {
+  for (const [name, page] of bookChapters) {
+    console.log(name.padEnd(20, '_'), page);
+  }
+};
+
+const bookChapters = [['The Basics', 14], ['Sorting', 254], ['Searching', 372], ['Graphs', 526], ['Strings', 706]];
+
+logBookChapters(bookChapters);
