@@ -152,3 +152,25 @@ airIndia.buyPlane = function () {
 // const bookAI = airIndia.buyPlane.bind(airIndia);
 // binds the this keyword to always point to airIndia for the new function it returns
 document.querySelector('.buy').addEventListener('click', airIndia.buyPlane.bind(airIndia));
+
+
+// Partial application (means we can preset parameters)
+
+const addTax = (rate, value) => value + rate * value;
+
+const vatAdder = (value) => value + 0.23 * value;
+
+const addVAT = addTax.bind(null, 0.23);
+
+// same as addTax = (value) => value + value * 0.23;
+
+const taxAdder = function (rate) {
+    return function (value) {
+        console.log(value + value * rate);
+    };
+};
+
+const addVat2 = taxAdder(0.23);
+
+// taxAdder(0.2)(100);
+// addVat2(100);
