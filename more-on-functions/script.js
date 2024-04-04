@@ -174,3 +174,40 @@ const addVat2 = taxAdder(0.23);
 
 // taxAdder(0.2)(100);
 // addVat2(100);
+
+// -------------------------------------------------------------
+// IIFEs - Immediately invoked function expressions
+
+(function () {
+    // console.log('this is an IIFE');
+    // function body
+})();
+
+// can be an arrow function too
+(() => {
+    // console.log('this is an IIFE too.!');
+    // function body
+})();
+
+
+// -------------------------------------------------------------
+// CLOSURES
+
+const secureBooking = function () {
+    let passengerCount = 0;
+
+    return function () {
+        passengerCount++;
+        // console.log(`${++passengerCount} passenger(s).`);
+    };
+};
+
+const booker = secureBooking();
+
+//even after the execution context for the secureBooking function is removed from the call stack, the returned function stored in booker, will have access to the variable environment of the secure booking function's execution context. This connection is called a closure
+
+booker();
+booker();
+booker();
+
+console.dir(booker);
