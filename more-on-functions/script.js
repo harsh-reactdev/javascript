@@ -210,4 +210,59 @@ booker();
 booker();
 booker();
 
-console.dir(booker);
+// console.dir(booker);
+
+// ex 1
+let a;
+
+const b = function () {
+    const c = 92;
+
+    a = function () {
+        // console.log(c);
+    };
+};
+
+b();
+// while executing b, a is reassigned with a function value and this function value builds up a connection with its lexical variable environment.
+
+a();
+// even after b has finished execution, since the connection of function assigned to a with the variable environment of the execution context of function b, calling a will still log the value of c defined inside the function b.
+// This is because of the closures property of JS
+
+const d = function () {
+    const e = 111;
+
+    a = function () {
+        // console.log(e * 2);
+    };
+};
+
+a(); //still has the variable env of b's execution context
+// console.dir(a);
+
+d();
+a(); //but now it since the value of a was reassigned with a different function, the closure will be replaced and maintained with the d function 
+// console.dir(a);
+
+
+// example 2
+const boardingPassengers = function (n, wait) {
+    const perGroup = n / 3;
+
+    // setTimeout will run after 5 seconds and the execution of boarding passengers function will be completed by then. But still function within setTimeout will still have access to its lexical variable environment of its parent exectution context
+    setTimeout(function () {
+        console.log(`We are now boarding all ${n} passengers.`);
+
+        console.log(`There are 3 groups of passengers each with ${perGroup} prople in it.`);
+    }, wait * 1000);
+
+    console.log(`Will start boarding in ${wait} minutes.`);
+};
+
+const perGroup = 180;
+// although perGroup value is present in the outer scope, the function will first look into its closure scope to find the variable. Only if not present, then it will look in the upper scope
+
+// This shows that closures have a higher priority than the scope chain
+
+// boardingPassengers(120, 5);
