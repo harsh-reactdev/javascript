@@ -83,4 +83,4 @@ console.log(arr.slice(1)); //extracts everything from the 1st index to end of th
 
 console.log(arr.slice(1, 3)); //extracts everything from 1st index to 2nd index and 3rd index wont be included
 
-console.log(arr.slice(0, -3)); //extracts ecer
+console.log(arr.slice(0, -3)); //this means, extracts everything from the array from the start index and excludes the the last 3 elements of the array.
