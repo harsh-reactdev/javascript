@@ -123,5 +123,5 @@ const letters = arr2.concat(arr3); // concatenates arr2 and arr3 and gives new a
 /////////////////////////////////////////////////
 // JOIN METHOD
 
-console.log(letters.join(' - '));
+letters.join(' - ');
 // returns a string like this a - b - c - d - e - f - g - h - i - j, and this is by joining all the elements of the array this method is called with seperated by the seperator sent as an argument or using comma by default when no argument is sent
