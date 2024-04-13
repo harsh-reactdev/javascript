@@ -76,11 +76,52 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 /////////////////////////////////////////////////
 
 let arr = ['a', 'b', 'c', 'd', 'e'];
-
+let arr2 = [...arr];
+/////////////////////////////////////////////////
 // SLICE METHOD
 
-console.log(arr.slice(1)); //extracts everything from the 1st index to end of the array
+arr.slice(1); //extracts everything from the 1st index to end of the array
 
-console.log(arr.slice(1, 3)); //extracts everything from 1st index to 2nd index and 3rd index wont be included
+arr.slice(1, 3); //extracts everything from 1st index to 2nd index and 3rd index wont be included
 
-console.log(arr.slice(0, -3)); //this means, extracts everything from the array from the start index and excludes the the last 3 elements of the array.
+arr.slice(0, -3); //this means, extracts everything from the array from the start index and excludes the the last 3 elements of the array.
+
+arr.slice(); //creates a shallow copy of the array
+
+
+/////////////////////////////////////////////////
+// SPLICE METHOD
+
+// console.log(arr);
+
+arr.splice(2); //removes all the elements except the first 2 elements of the array and returns the array of deleted elements in it
+
+arr.splice(-1); //removes the last element from the array
+
+arr.splice(1, 2); // removes 2 elements starting from index 1 and returns an array with these 2 removed elements
+
+
+/////////////////////////////////////////////////
+// REVERSE METHOD
+let arr3 = ['j', 'i', 'h', 'g', 'f'];
+
+arr3.reverse(); //reverses the original array while also mutating it
+
+// console.log(arr3); //shows that the reverse method mutates the original array
+
+
+/////////////////////////////////////////////////
+// CONCAT METHOD
+
+const letters = arr2.concat(arr3); // concatenates arr2 and arr3 and gives new array with all elements of arr2 and arr3
+
+// console.log([...arr2, ...arr3]); //same as concat method
+
+// console.log(letters);
+
+
+/////////////////////////////////////////////////
+// JOIN METHOD
+
+console.log(letters.join(' - '));
+// returns a string like this a - b - c - d - e - f - g - h - i - j, and this is by joining all the elements of the array this method is called with seperated by the seperator sent as an argument or using comma by default when no argument is sent
