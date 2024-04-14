@@ -125,3 +125,13 @@ const letters = arr2.concat(arr3); // concatenates arr2 and arr3 and gives new a
 
 letters.join(' - ');
 // returns a string like this a - b - c - d - e - f - g - h - i - j, and this is by joining all the elements of the array this method is called with seperated by the seperator sent as an argument or using comma by default when no argument is sent
+
+
+/////////////////////////////////////////////////
+// AT METHOD
+
+const arr4 = [...arr2];
+
+arr4.at(-1); //returns the last element
+
+'harshi'.at(-1); //returns the last character of the string
