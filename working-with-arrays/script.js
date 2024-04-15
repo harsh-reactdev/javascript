@@ -65,13 +65,13 @@ const inputClosePin = document.querySelector('.form__input--pin');
 /////////////////////////////////////////////////
 // LECTURES
 
-const currencies = new Map([
-  ['USD', 'United States dollar'],
-  ['EUR', 'Euro'],
-  ['GBP', 'Pound sterling'],
-]);
+// const currencies = new Map([
+//   ['USD', 'United States dollar'],
+//   ['EUR', 'Euro'],
+//   ['GBP', 'Pound sterling'],
+// ]);
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 
@@ -135,3 +135,64 @@ const arr4 = [...arr2];
 arr4.at(-1); //returns the last element
 
 'harshi'.at(-1); //returns the last character of the string
+
+
+/////////////////////////////////////////////////
+/////////////////////////////////////////////////
+// forEach METHOD
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// for (const movement of movements) {
+//   if (movement > 0)
+//     console.log(`$${movement} credited.`);
+//   else
+//     console.log(`$${Math.abs(movement)} debited.`);
+// }
+
+// forEach method takes a callback function as a parameter which will be called at each iteration with the current item of the array as an argument to the callback function
+
+
+const cbfn = (item, index, arr) => {
+  // console.log(item, index, arr);
+  // item > 0 ? console.log(`$${item} credited.`) : console.log(`$${Math.abs(item)} debited.`);
+};
+
+movements.forEach((movement, index, arr) => {//we can either write the callback function definition itself here
+  // console.log(movement, index, arr);
+  // movement > 0 ? console.log(`$${movement} credited.`) : console.log(`$${movement} debited.`);
+});
+
+movements.forEach(cbfn);
+// or simply send the callback function defined somewhere as the argument for forEach
+
+
+/////////////////////////////////////////////////
+// forEach on maps
+
+const currencies = new Map([
+  ['USD', 'United States dollar'],
+  ['EUR', 'Euro'],
+  ['GBP', 'Pound sterling'],
+]);
+
+
+//forEach when used on maps, calls the callback with arguments in order value of each map item, its key and the whole map itself
+currencies.forEach(function (val, key, map) {
+  // console.log(key, ' -> ', val);
+});
+
+
+/////////////////////////////////////////////////
+// forEach on sets
+
+// works same as maps but there is no key for set items so both key and value corresponds to the current set item of the iteration
+
+const feSet = new Set(['USD', 'INR', 'EUR', 'CAD', 'GBP', 'EUR']);
+
+// console.log(feSet); //sets contain only unique values
+
+feSet.forEach(function (key, value, set) {
+  // console.log(key, ' -> ', value, set);
+  // same as maps, but key and value simply holds the same value of current set item and set is the entire set we are looping on
+});
