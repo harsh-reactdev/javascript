@@ -61,6 +61,27 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+
+const displayMovements = function (movements) {
+  containerMovements.innerHTML = ''; //clears the container before putting new data there
+
+  movements.forEach(function (mov, i) {
+    const typeOfMovement = mov > 0 ? 'deposit' : 'withdrawal';
+    const html = `
+    <div class="movements__row">
+      <div class="movements__type movements__type--${typeOfMovement}">${i} ${typeOfMovement.toUpperCase()}</div>
+      <div class="movements__value">${mov} INR</div>
+    </div>
+  `;
+
+    //adds the html to the specified posititon of the element, with which insertAdjacentHTML method is called.
+    containerMovements.insertAdjacentHTML('afterbegin', html);
+  });
+};
+
+displayMovements(account1.movements);
+
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -196,3 +217,6 @@ feSet.forEach(function (key, value, set) {
   // console.log(key, ' -> ', value, set);
   // same as maps, but key and value simply holds the same value of current set item and set is the entire set we are looping on
 });
+
+
+
