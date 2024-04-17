@@ -61,7 +61,6 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-
 const displayMovements = function (movements) {
   containerMovements.innerHTML = ''; //clears the container before putting new data there
 
@@ -81,6 +80,57 @@ const displayMovements = function (movements) {
 
 displayMovements(account1.movements);
 
+/////////////////////////////////////////////////
+// map METHOD
+
+// creating usernames for all the accounts of the bankist app
+// const getInitial = userName =>
+//   userName
+//     .toLowerCase()
+//     .split(' ')
+//     .map(word => word[0])
+//     .join('');
+
+const createUserNames = function (accs) {
+  accs.forEach(
+    acc =>
+    (acc.userName = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(word => word[0])
+      .join(''))
+  );
+};
+
+createUserNames(accounts);
+// console.log(accounts);
+
+const getBalance = function (movements) {
+  const balance = movements.reduce((bal, mov) => bal + mov, 0);
+
+  labelBalance.textContent = `${balance} INR`;
+};
+
+getBalance(account1.movements);
+
+/////////////////////////////////////////////////
+// filter METHOD
+
+// filtering only deposits
+
+// returns a new array with only the elements of the original array that satisfies the condition in the callback function
+const depositsOnly = account1.movements.filter(mov => mov > 0);
+const withdrawalsOnly = account1.movements.filter(mov => mov < 0);
+// console.log(withdrawalsOnly);
+
+/////////////////////////////////////////////////
+// reduce METHOD
+
+// reducing movements to find out the global balance
+// the first parameter of the callback function will be a accumulator variable that stores the previous accumulated value of the previous iteration
+const balance = account1.movements.reduce((bal, mov) => bal + mov, 0);
+// console.log(`Iteration ${i + 1} -> ${bal}`);
+// console.log(balance);
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -109,7 +159,6 @@ arr.slice(0, -3); //this means, extracts everything from the array from the star
 
 arr.slice(); //creates a shallow copy of the array
 
-
 /////////////////////////////////////////////////
 // SPLICE METHOD
 
@@ -121,7 +170,6 @@ arr.splice(-1); //removes the last element from the array
 
 arr.splice(1, 2); // removes 2 elements starting from index 1 and returns an array with these 2 removed elements
 
-
 /////////////////////////////////////////////////
 // REVERSE METHOD
 let arr3 = ['j', 'i', 'h', 'g', 'f'];
@@ -129,7 +177,6 @@ let arr3 = ['j', 'i', 'h', 'g', 'f'];
 arr3.reverse(); //reverses the original array while also mutating it
 
 // console.log(arr3); //shows that the reverse method mutates the original array
-
 
 /////////////////////////////////////////////////
 // CONCAT METHOD
@@ -140,13 +187,11 @@ const letters = arr2.concat(arr3); // concatenates arr2 and arr3 and gives new a
 
 // console.log(letters);
 
-
 /////////////////////////////////////////////////
 // JOIN METHOD
 
 letters.join(' - ');
 // returns a string like this a - b - c - d - e - f - g - h - i - j, and this is by joining all the elements of the array this method is called with seperated by the seperator sent as an argument or using comma by default when no argument is sent
-
 
 /////////////////////////////////////////////////
 // AT METHOD
@@ -156,7 +201,6 @@ const arr4 = [...arr2];
 arr4.at(-1); //returns the last element
 
 'harshi'.at(-1); //returns the last character of the string
-
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -173,20 +217,19 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 // forEach method takes a callback function as a parameter which will be called at each iteration with the current item of the array as an argument to the callback function
 
-
 const cbfn = (item, index, arr) => {
   // console.log(item, index, arr);
   // item > 0 ? console.log(`$${item} credited.`) : console.log(`$${Math.abs(item)} debited.`);
 };
 
-movements.forEach((movement, index, arr) => {//we can either write the callback function definition itself here
+movements.forEach((movement, index, arr) => {
+  //we can either write the callback function definition itself here
   // console.log(movement, index, arr);
   // movement > 0 ? console.log(`$${movement} credited.`) : console.log(`$${movement} debited.`);
 });
 
 movements.forEach(cbfn);
 // or simply send the callback function defined somewhere as the argument for forEach
-
 
 /////////////////////////////////////////////////
 // forEach on maps
@@ -197,12 +240,10 @@ const currencies = new Map([
   ['GBP', 'Pound sterling'],
 ]);
 
-
 //forEach when used on maps, calls the callback with arguments in order value of each map item, its key and the whole map itself
 currencies.forEach(function (val, key, map) {
   // console.log(key, ' -> ', val);
 });
-
 
 /////////////////////////////////////////////////
 // forEach on sets
@@ -218,5 +259,28 @@ feSet.forEach(function (key, value, set) {
   // same as maps, but key and value simply holds the same value of current set item and set is the entire set we are looping on
 });
 
+/////////////////////////////////////////////////
+// array.MAP(() => {})
 
+// map method returns a new array of all the results returned by applying a callback function on each element of the original array
 
+const eurToUsd = 1.1;
+const movementsUsd = movements.map(mov => Math.trunc(mov * eurToUsd));
+// console.log(movementsUsd);
+
+const movDescs = movements.map(
+  (
+    mov,
+    index //the entire array is also accessible from the map method
+  ) =>
+    // mov > 0 ? `${index + 1} -> $${mov} credited.` : `${index + 1} -> $${Math.abs(mov)} debited.`
+    `Transaction ${index + 1} -> You ${mov > 0 ? 'deposited' : 'withdrew'
+    } $${Math.abs(mov)}.`
+);
+
+// console.log(movDescs);
+
+// reduce method for maximum of an array
+
+const maxMov = movements.reduce((max, mov) => mov > max ? mov : max, movements[0]);
+// console.log(maxMov);
