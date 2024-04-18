@@ -68,8 +68,8 @@ const displayMovements = function (movements) {
     const typeOfMovement = mov > 0 ? 'deposit' : 'withdrawal';
     const html = `
     <div class="movements__row">
-      <div class="movements__type movements__type--${typeOfMovement}">${i} ${typeOfMovement.toUpperCase()}</div>
-      <div class="movements__value">${mov} INR</div>
+      <div class="movements__type movements__type--${typeOfMovement}">Tr.${i} ${typeOfMovement.toUpperCase()}</div>
+      <div class="movements__value">${mov} ₨</div>
     </div>
   `;
 
@@ -108,11 +108,31 @@ createUserNames(accounts);
 const getBalance = function (movements) {
   const balance = movements.reduce((bal, mov) => bal + mov, 0);
 
-  labelBalance.textContent = `${balance} INR`;
+  labelBalance.textContent = `${balance} ₨`;
 };
 
 getBalance(account1.movements);
 
+const calcDisplaySummary = movements => {
+  const deposits = movements
+    .filter(mov => mov > 0)
+    .reduce((tot, mov) => tot + mov, 0);
+  labelSumIn.textContent = `${deposits} ₨`;
+
+  const withdrawals = movements
+    .filter(mov => mov < 0)
+    .reduce((tot, mov) => tot + Math.abs(mov), 0);
+  labelSumOut.textContent = `${withdrawals} ₨`;
+
+  const interest = movements
+    .filter(mov => mov > 0)
+    .map(dep => dep * 0.012)
+    .filter(int => int >= 1)
+    .reduce((acc, int) => acc + int);
+  labelSumInterest.textContent = `${interest} ₨`;
+};
+
+calcDisplaySummary(account1.movements);
 /////////////////////////////////////////////////
 // filter METHOD
 
@@ -282,5 +302,22 @@ const movDescs = movements.map(
 
 // reduce method for maximum of an array
 
-const maxMov = movements.reduce((max, mov) => mov > max ? mov : max, movements[0]);
+const maxMov = movements.reduce(
+  (max, mov) => (mov > max ? mov : max),
+  movements[0]
+);
 // console.log(maxMov);
+
+/////////////////////////////////////////////////
+/////////////////////////////////////////////////
+// METHOD CHAINING
+
+const totalDepInUSD = Math.trunc(
+  movements
+    .filter(mov => mov > 0)
+    .map(dep => dep * eurToUsd)
+    .reduce((tot, dep) => tot + dep, 0)
+);
+// console.log(totalDepInUSD);
+
+// console.log(new Map([...'harshishere'].entries()));
