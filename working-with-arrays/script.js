@@ -61,6 +61,17 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+let currentUser;
+
+// labelDate.textContent = new Date().toJSON().slice(0, 10);
+
+
+// clearing data from login input fields
+const clearLoginForm = () => {
+  inputLoginUsername.value = inputLoginPin.value = '';
+  inputLoginPin.blur();
+};
+
 const displayMovements = function (movements) {
   containerMovements.innerHTML = ''; //clears the container before putting new data there
 
@@ -78,7 +89,7 @@ const displayMovements = function (movements) {
   });
 };
 
-displayMovements(account1.movements);
+// displayMovements(account1.movements);
 
 /////////////////////////////////////////////////
 // map METHOD
@@ -107,13 +118,12 @@ createUserNames(accounts);
 
 const getBalance = function (movements) {
   const balance = movements.reduce((bal, mov) => bal + mov, 0);
-
   labelBalance.textContent = `${balance} ₨`;
 };
 
-getBalance(account1.movements);
+// getBalance(account1.movements);
 
-const calcDisplaySummary = movements => {
+const calcDisplaySummary = (movements, intRate) => {
   const deposits = movements
     .filter(mov => mov > 0)
     .reduce((tot, mov) => tot + mov, 0);
@@ -126,13 +136,80 @@ const calcDisplaySummary = movements => {
 
   const interest = movements
     .filter(mov => mov > 0)
-    .map(dep => dep * 0.012)
+    .map(dep => dep * (intRate / 100))
     .filter(int => int >= 1)
     .reduce((acc, int) => acc + int);
-  labelSumInterest.textContent = `${interest} ₨`;
+  labelSumInterest.textContent = `${interest.toFixed(2)} ₨`;
 };
 
-calcDisplaySummary(account1.movements);
+// calcDisplaySummary(movements);
+const updateUI = function () {
+  displayMovements(currentUser.movements);
+  getBalance(currentUser.movements);
+  calcDisplaySummary(currentUser.movements, currentUser.interestRate);
+};
+
+const authorizeUser = function (e) {
+  e.preventDefault(); //prevents form from submitting
+  // console.log("logged in");
+  currentUser = accounts.find(acc => acc.userName === inputLoginUsername.value && acc.pin === Number(inputLoginPin.value));
+  // console.log(currentUser);
+
+  // display UI wrt currentUser
+  if (currentUser) {
+    const { movements, owner, interestRate } = currentUser;
+
+    // remove focus from input fields
+    // inputLoginUsername.value = inputLoginPin.value = '';
+    // inputLoginPin.blur();
+    clearLoginForm();
+
+    //change welcome message
+    labelWelcome.textContent = `Welcome back, ${owner.split(' ')[0]}`;
+
+    //display movements UI
+    displayMovements(movements);
+
+    //display balance
+    getBalance(movements);
+
+    //display summmary data
+    calcDisplaySummary(movements, interestRate);
+
+    // set opacity back to 100
+    containerApp.style.opacity = 100;
+  } else {
+    alert('No such user exists.!');
+    clearLoginForm();
+  }
+};
+
+const transfer = function (e) {
+  e.preventDefault();
+
+  const { userName: currentUserName, movements: currentUserMovements } = currentUser;
+
+  const receiverUserName = inputTransferTo.value;
+  const trAmt = Number(inputTransferAmount.value);
+  // console.log(receiver, trAmt);
+
+  // getting the receiver's account
+  const receiverAcc = accounts.find(acc => acc.userName === receiverUserName);
+
+  // transfer process
+  if (receiverAcc && currentUserName !== receiverUserName) {
+    receiverAcc.movements.push(trAmt);
+    currentUserMovements.push(-trAmt);
+    // console.log(currentUserMovements);
+    updateUI();
+  }
+
+  inputTransferTo.value = inputTransferAmount.value = '';
+};
+
+btnLogin.addEventListener('click', authorizeUser);
+btnTransfer.addEventListener('click', transfer);
+
 /////////////////////////////////////////////////
 // filter METHOD
 
@@ -321,3 +398,21 @@ const totalDepInUSD = Math.trunc(
 // console.log(totalDepInUSD);
 
 // console.log(new Map([...'harshishere'].entries()));
+
+
+/////////////////////////////////////////////////
+/////////////////////////////////////////////////
+//FIND METHOD
+
+const firstFind = movements.find(mov => mov > 0); // returns the first value of the array thats greater than 0
+// console.log(firstFind); 
+
+const acc = accounts.find(user => user.userName === 'jd');
+// console.log(acc);
+
+// let currentUser = {};
+// for (let user of accounts) {
+//   if (user.userName === 'js')
+//     currentUser = user;
+// }
+// console.log(currentUser);
