@@ -1,0 +1,74 @@
+'use strict';
+
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+
+// FOR OF loop
+
+// for (const movement of movements) {
+//     if (movement > 0) {
+//         console.log(`You deposited Rs.${movement}`);
+//     } else {
+//         console.log(`You withdrew Rs.${Math.abs(movement)}`);
+//     }
+// }
+
+// -----------------------------------------------------------------
+
+// FOR EACH loop
+const condCheck = function (item) {
+    if (item > 0) {
+        console.log(`You deposited Rs.${item}`);
+    } else {
+        console.log(`You withdrew Rs.${Math.abs(item)}`);
+    }
+};
+// movements.forEach((movement) => {
+//         if (movement > 0) {
+//         console.log(`You deposited Rs.${movement}`);
+//     } else {
+//         console.log(`You withdrew Rs.${Math.abs(movement)}`);
+//     }
+// });
+
+movements.forEach(condCheck);
+
+// movements.forEach()
+
+// scope chain + closures 
+
+const a = function () {
+
+    // console.log(arguments);
+
+    const b = 10;
+    const c = 20;
+    // console.log(this); //undefined in strict mode, window object otherwise
+
+    // const d = () => console.log(this); //undefined in strict mode, window object otherwise
+    // d();
+    const res = {
+        a: 10,
+        b: 20,
+        methods: {
+            getB: () => console.log(this),
+            getC: () => console.log(c)
+        },
+        userFunc: function () {
+            // let self = this;
+            const f1 = () => {
+                console.log(this);
+            };
+            f1();
+            // return this
+        }
+    };
+    return res
+};
+
+let d = a(4, 12, 'harsh');
+console.log(d.userFunc())
+// d.methods.getB();
+// d.getC();
+

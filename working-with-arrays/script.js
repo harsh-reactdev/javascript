@@ -116,9 +116,10 @@ const createUserNames = function (accs) {
 createUserNames(accounts);
 // console.log(accounts);
 
-const getBalance = function (movements) {
-  const balance = movements.reduce((bal, mov) => bal + mov, 0);
-  labelBalance.textContent = `${balance} ₨`;
+const getBalance = function (acc) {
+  const { movements } = acc;
+  acc.balance = movements.reduce((bal, mov) => bal + mov, 0);
+  labelBalance.textContent = `${acc.balance} ₨`;
 };
 
 // getBalance(account1.movements);
@@ -145,7 +146,7 @@ const calcDisplaySummary = (movements, intRate) => {
 // calcDisplaySummary(movements);
 const updateUI = function () {
   displayMovements(currentUser.movements);
-  getBalance(currentUser.movements);
+  getBalance(currentUser);
   calcDisplaySummary(currentUser.movements, currentUser.interestRate);
 };
 
@@ -171,7 +172,7 @@ const authorizeUser = function (e) {
     displayMovements(movements);
 
     //display balance
-    getBalance(movements);
+    getBalance(currentUser);
 
     //display summmary data
     calcDisplaySummary(movements, interestRate);
@@ -197,7 +198,7 @@ const transfer = function (e) {
   const receiverAcc = accounts.find(acc => acc.userName === receiverUserName);
 
   // transfer process
-  if (receiverAcc && currentUserName !== receiverUserName) {
+  if (receiverAcc && currentUserName !== receiverUserName && currentUser.balance >= trAmt && trAmt > 0) {
     receiverAcc.movements.push(trAmt);
     currentUserMovements.push(-trAmt);
     // console.log(currentUserMovements);
@@ -210,7 +211,37 @@ const transfer = function (e) {
 btnLogin.addEventListener('click', authorizeUser);
 btnTransfer.addEventListener('click', transfer);
 
+
+
 /////////////////////////////////////////////////
+// const testLS = function () {
+//   let bish = 'bad fish';
+//   const testLSobj = {
+//     a: 'nothign',
+//     b: 'everything',
+//     get: (a, b, c) => { console.log(this, arguments); },
+//     printThis: function () {
+//       console.log(this.a, 'is impossible');
+//       const self = this;
+
+//       const fun2 = function (a, b, c) {
+//         console.log(this); //undefined
+//         console.log(self); //the value of this 
+//         console.log(arguments);
+//       };
+
+//       fun2(4, 10, 17, 23);
+//     }
+//   };
+
+//   console.log(this);
+//   testLSobj.printThis();
+//   testLSobj.get(2, 3, 4, 5);
+// };
+// testLS();
+////////////////////////////////////////////////////
+
+
 // filter METHOD
 
 // filtering only deposits
@@ -416,3 +447,42 @@ const acc = accounts.find(user => user.userName === 'jd');
 //     currentUser = user;
 // }
 // console.log(currentUser);
+
+// const getUsers = async (token) => {
+//   const users = await fetch('https://reqres.in/api/users', {
+//     method: "GET",
+//     headers: {
+//       'Authorization': 'Bearer ' + token,
+//       'Content-type': 'application/json'
+//     }
+//   }).then(res => res.json());
+
+//   console.log(users.data);
+// };
+
+
+// const fp = async () => {
+//   const resp = await fetch('https://reqres.in/api/login', {
+//     method: "POST",
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify({
+//       "email": "eve.holt@reqres.in",
+//       "password": "cityslicka"
+//     })
+//   });
+//   const res = await resp.json();
+
+//   getUsers(res.token);
+
+//   // return users;
+// };
+
+// console.log(fp());
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Continuing working with arrays May 16th Fri, 2025
+
+
+
