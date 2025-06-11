@@ -466,8 +466,8 @@ const firstTruthyValue = noValue || 10;
 // AND
 
 // console.log('' && 'harsh'); //returns ''
-// console.log(true && 0 && 'harsh'); //returns true
-// console.log(undefined && null); //returns null although null is a falsy value
+// console.log(true && 0 && 'harsh'); //returns 0
+// console.log(undefined && null); //returns undefined although null is also a falsy value
 // console.log('harsh' && 3 && true && false && 7); //retruns false
 
 // ------------------------------------------------------------------
