@@ -90,3 +90,11 @@ const summer = function (...args) {
 // console.log(true && 0 && 'harsh'); //returns true
 
 // console.log(undefined && null); //returns undefined although null is a falsy value
+
+
+const winter = function ({a, b, c}) {
+    // console.log();
+    return
+};
+
+// winter({a: 10, b: 20, c: 30})
