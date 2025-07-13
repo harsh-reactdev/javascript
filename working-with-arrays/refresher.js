@@ -1,7 +1,7 @@
 'use strict';
 
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 
 // FOR OF loop
@@ -32,7 +32,7 @@ const condCheck = function (item) {
 //     }
 // });
 
-movements.forEach(condCheck);
+// movements.forEach(condCheck);
 
 // movements.forEach()
 
@@ -64,7 +64,7 @@ const a = function () {
             // return this
         }
     };
-    return res
+    return res;
 };
 
 let d = a(4, 12, 'harsh');
@@ -72,7 +72,7 @@ let d = a(4, 12, 'harsh');
 // d.methods.getB();
 // d.getC();
 
-let f = ['a fox', 'and', 'a wolf']
+let f = ['a fox', 'and', 'a wolf'];
 // a(...f)
 
 
@@ -92,9 +92,37 @@ const summer = function (...args) {
 // console.log(undefined && null); //returns undefined although null is a falsy value
 
 
-const winter = function ({a, b, c}) {
+const winter = function ({ a, b, c }) {
     // console.log();
-    return
+    return;
 };
 
 // winter({a: 10, b: 20, c: 30})
+
+// -----------------------------------------------------------
+// 13/07/25
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// for-of loop
+// for (const movement of movements) {
+//     if (movement > 0) console.log(`Your account is credited with Rs.${movement}.`);
+//     else console.log(`Your account is debited with Rs.${Math.abs(movement)}.`)
+// }
+
+// ------------------------------------------------------------
+
+// forEach
+const checkTransaction = function (item) {
+    // console.log(arguments);
+    // console.log('This is from forEach : ');
+    if (item > 0) console.log(`Your account is credited with Rs.${item}.`);
+    else console.log(`Your account is debited with Rs.${Math.abs(item)}.`);
+};
+
+// movements.forEach(checkTransaction);
+// at each iteration of forEach, it sends the current item, its index and the whole array as an argument to the callback function
+
+const act = movements.entries();
+
+// -------------------------------------------------------------
+
