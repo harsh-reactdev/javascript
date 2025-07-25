@@ -61,6 +61,10 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+
+// CURRENT USER
+let currentUser;
+
 const createUsername = function (accounts) {
     accounts.forEach((acc) => {
         acc['username'] = acc.owner.toLowerCase().split(' ').map((item) => item[0]).join('');
@@ -86,46 +90,108 @@ const displayMovements = function (movements) {
     });
 };
 
-displayMovements(account1.movements);
-
 // calculating summary
-const calcSummary = function (transactions) {
+const calcSummary = function (transactions, intRate) {
     const incomes = transactions.filter(tr => tr > 0).reduce((bal, tr) => bal + tr, 0);
     const payments = transactions.filter(tr => tr < 0).reduce((bal, tr) => bal + tr, 0);
 
-    const interest = transactions.filter(tr => tr > 0).map(tr => (tr * 1.2) / 100).filter(tr => tr > 1).reduce((totInt, curr) => totInt + curr);
+    const interest = transactions.filter(tr => tr > 0).map(tr => (tr * intRate) / 100).filter(tr => tr > 1).reduce((totInt, curr) => totInt + curr);
 
     labelSumIn.textContent = `₹${incomes}`;
     labelSumOut.textContent = `₹${Math.abs(payments)}`;
     labelSumInterest.textContent = `₹${interest}`;
 };
-calcSummary(account1.movements);
 
 // calculating account balance
-const calcBalance = function (transactions) {
-    return transactions.reduce((bal, mov) => bal + mov, 0);
+const calcBalance = function (acc) {
+    acc.balance = acc.movements.reduce((bal, mov) => bal + mov, 0);
+    labelBalance.textContent = `₹${acc.balance}`;
 };
 
-accounts.forEach((acc) => {
-    acc['balance'] = calcBalance(acc.movements);
-    // console.log(index, calcBalance(acc.movements));
-    // console.log(accounts);
-});
+const initUserUI = function (currentUser) {
+    const { movements, interestRate, owner } = currentUser;
 
-const reInit = function () {
+    labelWelcome.textContent = `Welcome back, ${owner.split(' ')[0]}`;
+    containerApp.style.opacity = 100;
+
+    calcBalance(currentUser);
+    displayMovements(movements);
+    calcSummary(movements, interestRate);
 
 };
+
+// login handler
+const handleLogin = function (e) {
+    e.preventDefault();
+    currentUser = accounts.find((acc) => inputLoginUsername.value === acc.username && parseInt(inputLoginPin.value) === acc.pin);
+
+    // clearing input fields and removing focus
+    inputLoginUsername.value = inputLoginPin.value = '';
+    inputLoginUsername.blur();
+    inputLoginPin.blur();
+
+    initUserUI(currentUser);
+};
+
+// transfer handler
+
+const checkUserValidity = function (toUser) {
+    let flag = false;
+    accounts.forEach(acc => {
+        // check if user exists
+        if (acc.username === toUser || acc.owner === toUser) {
+            flag = true;
+        }
+    });
+    return flag;
+};
+
+const initTransfer = function (to, amt) {
+    // find the recepient account
+    const toAcc = accounts.find(acc => acc.username === to || acc.owner === to);
+
+    // credit the receiver
+    toAcc?.movements.push(amt);
+
+    // debit the giver
+    currentUser.movements.push(-amt);
+
+    initUserUI(currentUser);
+};
+
+const handleTransfer = function (e) {
+    e.preventDefault();
+
+    const transferTo = inputTransferTo.value;
+    const transferAmt = Number(inputTransferAmount.value);
+
+    // check if the transation is not being made for oneself
+    if (transferTo !== currentUser.username && transferTo !== currentUser.owner) {
+        // check the transfer amount isn't greater than the current balance amount
+        // if (transferAmt < Number(labelBalance.textContent.split('₹')[1])) {
+        if (transferAmt && transferAmt <= currentUser.balance) {
+
+            // check recipient user validity
+            checkUserValidity(transferTo) ? initTransfer(transferTo, transferAmt) : window.alert('No such user found.!');
+        }
+    }
+    inputTransferAmount.value = inputTransferTo.value = '';
+    inputTransferAmount.blur();
+    inputTransferTo.blur();
+};
+
+// const reInit = function () {
+
+// };
+
+
+// //////////////////////////////////////////////////////////
+// EVENT LISTENERS
+
+btnLogin.addEventListener('click', handleLogin);
+btnTransfer.addEventListener('click', handleTransfer);
 
 
 
 // /////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////
-//concepts
-
-// const usdToEur = 1.1;
-// const Eur = account1.movements.map((item) => Math.trunc(item * usdToEur));
-// console.log(Eur);
-
-// max of array using reduce
-const maxVal = movements.reduce((maxVal, mov) => mov > maxVal ? mov : maxVal);
-// console.log(maxVal);
+//////////////////////////////////////////////////////////////////////////

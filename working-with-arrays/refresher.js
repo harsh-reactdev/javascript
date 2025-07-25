@@ -213,3 +213,13 @@ const reducedMovs = movements.reduce((prev, curr, ind) => {
 //     console.log(res);
 
 // }
+
+//concepts
+
+// const usdToEur = 1.1;
+// const Eur = account1.movements.map((item) => Math.trunc(item * usdToEur));
+// console.log(Eur);
+
+// max of array using reduce
+const maxVal = movements.reduce((maxVal, mov) => mov > maxVal ? mov : maxVal);
+// console.log(maxVal);
