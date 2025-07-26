@@ -65,6 +65,8 @@ const inputClosePin = document.querySelector('.form__input--pin');
 // CURRENT USER
 let currentUser;
 
+///////////////////////////////
+// creating user names on web app instantiation
 const createUsername = function (accounts) {
     accounts.forEach((acc) => {
         acc['username'] = acc.owner.toLowerCase().split(' ').map((item) => item[0]).join('');
@@ -72,6 +74,7 @@ const createUsername = function (accounts) {
 };
 createUsername(accounts);
 
+//////////////////////////
 // displaying transactions
 const displayMovements = function (movements) {
     containerMovements.innerHTML = '';
@@ -90,6 +93,7 @@ const displayMovements = function (movements) {
     });
 };
 
+//////////////////////
 // calculating summary
 const calcSummary = function (transactions, intRate) {
     const incomes = transactions.filter(tr => tr > 0).reduce((bal, tr) => bal + tr, 0);
@@ -102,6 +106,7 @@ const calcSummary = function (transactions, intRate) {
     labelSumInterest.textContent = `₹${interest}`;
 };
 
+//////////////////////////////
 // calculating account balance
 const calcBalance = function (acc) {
     acc.balance = acc.movements.reduce((bal, mov) => bal + mov, 0);
@@ -120,6 +125,7 @@ const initUserUI = function (currentUser) {
 
 };
 
+////////////////
 // login handler
 const handleLogin = function (e) {
     e.preventDefault();
@@ -133,8 +139,9 @@ const handleLogin = function (e) {
     initUserUI(currentUser);
 };
 
-// transfer handler
 
+///////////////////
+// transfer handler
 const checkUserValidity = function (toUser) {
     let flag = false;
     accounts.forEach(acc => {
@@ -180,9 +187,28 @@ const handleTransfer = function (e) {
     inputTransferTo.blur();
 };
 
-// const reInit = function () {
+///////////////////////////////////
+// Log out
+const logout = function () {
+    currentUser = {};
+    // initUserUI(currentUser);
+    containerApp.style.opacity = 0;
+};
 
-// };
+///////////////////////////////////
+// Account close handler
+const closeAcc = function (e) {
+    e.preventDefault();
+
+    if (inputCloseUsername.value === currentUser.username && Number(inputClosePin.value) === currentUser.pin) {
+        const toDelete = accounts.findIndex(user => user.username === currentUser.username);
+        accounts.splice(toDelete, 1);
+
+        logout();
+    };
+
+    inputClosePin.value = inputCloseUsername.value = '';
+};
 
 
 // //////////////////////////////////////////////////////////
@@ -190,7 +216,7 @@ const handleTransfer = function (e) {
 
 btnLogin.addEventListener('click', handleLogin);
 btnTransfer.addEventListener('click', handleTransfer);
-
+btnClose.addEventListener('click', closeAcc);
 
 
 // /////////////////////////////////////////////////////////////////////////
