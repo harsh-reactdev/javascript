@@ -113,7 +113,7 @@ const calcBalance = function (acc) {
     labelBalance.textContent = `₹${acc.balance}`;
 };
 
-const initUserUI = function (currentUser) {
+const initUserUI = function () {
     const { movements, interestRate, owner } = currentUser;
 
     labelWelcome.textContent = `Welcome back, ${owner.split(' ')[0]}`;
@@ -188,6 +188,22 @@ const handleTransfer = function (e) {
 };
 
 ///////////////////////////////////
+// Loan request handler
+const handleLoanReq = function (e) {
+    e.preventDefault();
+
+    const loanAmt = Number(inputLoanAmount.value);
+
+    if (loanAmt > 0 && currentUser.movements.some(mov => mov > 0 && mov > (0.1 * loanAmt))) {
+        currentUser.movements.push(loanAmt);
+        initUserUI();
+    }
+
+    inputLoanAmount.value = '';
+    inputLoanAmount.blur();
+};
+
+///////////////////////////////////
 // Log out
 const logout = function () {
     currentUser = {};
@@ -216,6 +232,7 @@ const closeAcc = function (e) {
 
 btnLogin.addEventListener('click', handleLogin);
 btnTransfer.addEventListener('click', handleTransfer);
+btnLoan.addEventListener('click', handleLoanReq);
 btnClose.addEventListener('click', closeAcc);
 
 

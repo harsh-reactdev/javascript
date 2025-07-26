@@ -223,3 +223,10 @@ const reducedMovs = movements.reduce((prev, curr, ind) => {
 // max of array using reduce
 const maxVal = movements.reduce((maxVal, mov) => mov > maxVal ? mov : maxVal);
 // console.log(maxVal);
+
+
+// //////////////////////////////////////////////
+// array.flat(depth); method 
+const ecstra = [20, [34, 54], 200, 400, [234, [45, 907]], 6520];
+// console.log(ecstra.flatMap(ecs => [ecs, [ecs], [23, 54, [290, 453, 876]], 5600, 7800]));
+console.log(ecstra.flatMap((item) => item > 0 &&));

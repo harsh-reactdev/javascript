@@ -16,5 +16,4 @@ const car1 = new Cars('lamborghini', 'aventador', 2018, 'Petrol');
 // console.log(car1);
 // console.log(car1.getCarDetails());
 
-
 // --------------------------------------------------------------
