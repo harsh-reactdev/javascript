@@ -91,4 +91,10 @@ class DoublyLl {
     dll.deleteNode(50);
     dll.displayLl();
 
+    dll.deleteNode(10);
+    dll.displayLl();
+
+    dll.deleteNode(30);
+    dll.displayLl();
+
 })();
