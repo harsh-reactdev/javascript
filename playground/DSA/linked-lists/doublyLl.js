@@ -38,7 +38,6 @@ class DoublyLl {
 
         let current = this.head;
         let prev;
-        let next;
 
         if (this.head.data === data) {
             this.head = this.head.right;
