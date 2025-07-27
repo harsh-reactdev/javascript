@@ -35,12 +35,23 @@ class DoublyLl {
             console.log('Doubly linked list empty.!');
             return;
         }
+
         let current = this.head;
         let prev;
         let next;
+
+        if (this.head.data === data) {
+            this.head = this.head.right;
+            this.head.left = null;
+            return;
+        }
         while (current.data !== data) {
             prev = current;
             current = current.right;
+        }
+        if (current.right === null) {
+            prev.right = null;
+            return;
         }
         prev.right = current.right;
         current.right.left = current.left;
@@ -77,7 +88,7 @@ class DoublyLl {
 
     dll.displayLl();
 
-    dll.deleteNode(40);
+    dll.deleteNode(50);
     dll.displayLl();
 
 })();
