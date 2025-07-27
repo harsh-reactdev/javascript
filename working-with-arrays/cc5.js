@@ -9,7 +9,7 @@ const dogs = [
 ];
 
 // 1
-const calcRecFood = ({ weight }) => Math.trunc(weight ** 0.75 * 28) / 1000;
+const calcRecFood = ({ weight }) => Math.trunc(weight ** 0.75 * 28);
 
 dogs.forEach(dog => {
     dog.recFood = calcRecFood(dog);
@@ -31,14 +31,14 @@ const sarahsDog = function () {
 // 3
 const bigEaters =
     [...new Set(dogs
-        .filter((dog) => dog.curFood > (dog.recFood * 1000))
+        .filter((dog) => dog.curFood > dog.recFood)
         .flatMap(dog => dog.owners))
     ];
 // console.log(bigEaters);
 
 const littleEaters =
     [...new Set(dogs
-        .filter((dog) => dog.curFood < (dog.recFood * 1000))
+        .filter((dog) => dog.curFood < dog.recFood)
         .flatMap(dog => dog.owners))
     ];
 // console.log(littleEaters);
@@ -46,17 +46,17 @@ const littleEaters =
 
 // 4
 console.log(`${bigEaters.join(' and ')}'s dogs eat too much.`);
-console.log(`${bigEaters.join(' and ')}'s dogs eat too little.`);
+console.log(`${littleEaters.join(' and ')}'s dogs eat too little.`);
 
 
 // 5
-console.log(dogs.filter(dog => (dog.recFood * 1000) === dog.curFood));
+console.log(dogs.filter(dog => (dog.recFood) === dog.curFood));
 
 
 // 6
 const okayDogs = dogs.every(dog =>
-    dog.curFood > (dog.recFood * 0.9) ||
-    dog.curFood < (dog.recFood + 1.1));
+    dog.curFood > (dog.recFood * 0.9) &&
+    dog.curFood < (dog.recFood * 1.1));
 
 console.log(okayDogs);
 
@@ -64,8 +64,8 @@ console.log(okayDogs);
 // 7
 const okayDogsArr = dogs
     .filter(dog =>
-        dog.curFood > (dog.recFood * 0.9) ||
-        dog.curFood < (dog.recFood + 1.1))
+        dog.curFood > (dog.recFood * 0.9) &&
+        dog.curFood < (dog.recFood * 1.1))
     .flatMap(dog => dog);
 
 console.log(okayDogsArr);
@@ -73,11 +73,11 @@ console.log(okayDogsArr);
 
 // 8
 const grouped = Object.groupBy(dogs, (dog) => {
-    if (dog.curFood < (dog.recFood * 1000)) {
+    if (dog.curFood < dog.recFood) {
         return 'too-little';
     }
 
-    else if (dog.curFood > (dog.recFood * 1000)) {
+    else if (dog.curFood > dog.recFood) {
         return 'too-much';
     }
     else return 'exact';
