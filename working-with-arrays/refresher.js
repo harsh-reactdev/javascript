@@ -178,35 +178,35 @@ const reducedMovs = movements.reduce((prev, curr, ind) => {
 
 // ////////////////////////////////////////////////////////////////
 
-// const account1 = {
-//     owner: 'Jonas Schmedtmann',
-//     movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
-//     interestRate: 1.2, // %
-//     pin: 1111,
-// };
+const account1 = {
+    owner: 'Jonas Schmedtmann',
+    movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
+    interestRate: 1.2, // %
+    pin: 1111,
+};
 
-// const account2 = {
-//     owner: 'Jessica Davis',
-//     movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
-//     interestRate: 1.5,
-//     pin: 2222,
-// };
+const account2 = {
+    owner: 'Jessica Davis',
+    movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
+    interestRate: 1.5,
+    pin: 2222,
+};
 
-// const account3 = {
-//     owner: 'Steven Thomas Williams',
-//     movements: [200, -200, 340, -300, -20, 50, 400, -460],
-//     interestRate: 0.7,
-//     pin: 3333,
-// };
+const account3 = {
+    owner: 'Steven Thomas Williams',
+    movements: [200, -200, 340, -300, -20, 50, 400, -460],
+    interestRate: 0.7,
+    pin: 3333,
+};
 
-// const account4 = {
-//     owner: 'Sarah Smith',
-//     movements: [430, 1000, 700, 50, 90],
-//     interestRate: 1,
-//     pin: 4444,
-// };
+const account4 = {
+    owner: 'Sarah Smith',
+    movements: [430, 1000, 700, 50, 90],
+    interestRate: 1,
+    pin: 4444,
+};
 
-// const accounts = [account1, account2, account3, account4];
+const accounts = [account1, account2, account3, account4];
 
 // for (let acc of accounts) {
 //     let res = acc.owner === 'Jessica Davis' ? acc : 'Nope';
@@ -229,4 +229,90 @@ const maxVal = movements.reduce((maxVal, mov) => mov > maxVal ? mov : maxVal);
 // array.flat(depth); method 
 const ecstra = [20, [34, 54], 200, 400, [234, [45, 907]], 6520];
 // console.log(ecstra.flatMap(ecs => [ecs, [ecs], [23, 54, [290, 453, 876]], 5600, 7800]));
-console.log(ecstra.flatMap((item) => item > 0 &&));
+// console.log(ecstra.flatMap((item) => item > 0));
+
+// ///////////////////////////////////////////////
+// array.sort() method
+const unsortedStr = ['jeevan', 'abhi', 'puneeth', 'nithin', 'chandan'];
+const sortedStrAsc = unsortedStr.sort();
+const sortedStrDes = unsortedStr.sort((a, b) => b.localeCompare(a)); //sorts array of strings in descending order
+
+// for numbers, we have to pass in a compare function that returns either a positive, negative or
+// zero/NaN value so that we can either swap, keep order or do nothing respectively
+const unsorted = [5000, 3400, -150, -790, -3210, -1000, 8500, -30];
+const sortedIntAsc = unsorted.sort((a, b) => a - b); //sorts in ascending order
+const sortedIntDes = unsorted.sort((a, b) => b - a); //sorts in descending order
+
+// /////////////////////////////////////////////
+// Object.groupBy(arr, callback)
+
+const accHolders = [
+    { id: 1, name: "Amit", type: "Savings" },
+    { id: 2, name: "Sneha", type: "Current" },
+    { id: 3, name: "Ravi", type: "Salary" },
+    { id: 4, name: "Priya", type: "Fixed Deposit" },
+    { id: 5, name: "Rahul", type: "NRI" },
+    { id: 6, name: "Divya", type: "Savings" },
+    { id: 7, name: "Karthik", type: "Current" },
+    { id: 8, name: "Meena", type: "Salary" },
+    { id: 9, name: "Arjun", type: "Fixed Deposit" },
+    { id: 10, name: "Pooja", type: "NRI" },
+    { id: 11, name: "Manoj", type: "Savings" },
+    { id: 12, name: "Lavanya", type: "Current" },
+    { id: 13, name: "Vinay", type: "Salary" },
+    { id: 14, name: "Neha", type: "Fixed Deposit" },
+    { id: 15, name: "Rakesh", type: "NRI" },
+    { id: 16, name: "Swathi", type: "Savings" },
+    { id: 17, name: "Abhinav", type: "Current" },
+    { id: 18, name: "Sanjana", type: "Salary" },
+    { id: 19, name: "Naveen", type: "Fixed Deposit" },
+    { id: 20, name: "Anita", type: "NRI" }
+];
+
+const groupedView = Object.groupBy(accHolders, user => user.type);
+// console.log(groupedView);
+
+////////////////////////////////////////////////////////
+// array methods practice
+
+// 1
+const totalDepositsInBank = accounts.flatMap(acc => acc.movements).filter(tr => tr > 0).reduce((sum, tr) => sum + tr, 0);
+// console.log(totalDepositsInBank);
+
+// 2
+const totalNoOfDeposits = accounts.flatMap(acc => acc.movements).filter(tr => tr >= 1000).length;
+const totalNoOfDeposits2 = accounts.flatMap(acc => acc.movements).reduce((count, current) => {
+    count = current >= 1000 ? ++count : count;
+    return count;
+}, 0);
+// console.log(totalNoOfDeposits);
+// console.log(totalNoOfDeposits2);
+
+// 3
+const transactions = accounts
+    .flatMap(acc => acc.movements)
+    .reduce((tr, current) => {
+        // if (current > 0) {
+        //     tr.sumDeposit += current;
+        //     return tr;
+        // } else {
+        //     tr.sumWithdrawals += Math.abs(current);
+        //     return tr;
+        // }
+        current > 0 ? tr.sumDeposit += current : tr.sumWithdrawals += Math.abs(current);
+        return tr;
+    }, { sumDeposit: 0, sumWithdrawals: 0 });
+// console.log(transactions);
+
+// 4
+const str = `what's up my brother ? how you doin ?`;
+const str2 = `and then she said she saw the stars and the moon and the clouds.`;
+const exceptions = ['a', 'an', 'and', 'the', 'but', 'or', 'on', 'in', 'with'];
+
+const capitaliseString = str => str.replace(str[0], str[0].toUpperCase());
+
+const titleCased = str => capitaliseString(str.toLowerCase().split(' ')
+    .map(word => exceptions
+        .includes(word) ? word : capitaliseString(word))
+    .join(' '));
+// console.log(titleCased(str2));

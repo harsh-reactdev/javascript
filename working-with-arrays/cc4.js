@@ -49,22 +49,31 @@ const allActivities = breeds.flatMap(breed => breed.activities);
 console.log(allActivities);
 
 // 4
-const uniqueActivities = new Set(allActivities);
+// const uniqueActivities = new Set(allActivities);
+// we only created a set and did not convert it into an array in the line above. So we do this :
+const uniqueActivities = [...new Set(allActivities)];
 console.log(uniqueActivities);
 
 // 5
-breeds.forEach((breed) => {
-    if (breed.activities.includes('swimming')) {
-        breed.swimmingAdjacent = breed.activities.filter(act => act !== 'swimming');
-    }
-});
-console.log(breeds);
+// breeds.forEach((breed) => {
+//     if (breed.activities.includes('swimming')) {
+//         breed.swimmingAdjacent = breed.activities.filter(act => act !== 'swimming');
+//     }
+// });
+const swimmingAdjacent = [...new Set(breeds
+    .filter(breed => breed.activities.includes('swimming'))
+    .flatMap(breed => breed.activities).filter(activity => activity !== 'swimming'))];
+console.log('swimming adjacent : ', swimmingAdjacent);
 
 // 6
 // breeds.forEach(({ averageWeight }) => console.log(averageWeight >= 10)); //returned true for all 7
+const bigDawgs = breeds.every(breed => breed.averageWeight >= 10);
+console.log(bigDawgs);
 
 // 7
-breeds.forEach(({ activities }) => console.log(activities.length >= 3));
+// breeds.forEach(({ activities }) => console.log(activities.length >= 3));
+const activeDawgs = breeds.some(breed => breed.activities.length >= 3);
+console.log(activeDawgs);
 
 // BONUS
 const bonusCc = breeds.filter(({ activities }) => activities.includes('fetch')).reduce((acc, { averageWeight }) => Math.max(acc, averageWeight), 0);

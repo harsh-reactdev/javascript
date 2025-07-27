@@ -64,7 +64,7 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 // CURRENT USER
 let currentUser;
-
+let sortState = false;
 ///////////////////////////////
 // creating user names on web app instantiation
 const createUsername = function (accounts) {
@@ -77,9 +77,8 @@ createUsername(accounts);
 //////////////////////////
 // displaying transactions
 const displayMovements = function (movements) {
-    containerMovements.innerHTML = '';
-
-    movements.forEach(function (mov, i) {
+    const sorted = sortState ? movements.toSorted((a, b) => b - a) : movements;
+    sorted.forEach(function (mov, i) {
         const movType = mov > 0 ? 'deposit' : 'withdrawal';
 
         const html = `
@@ -204,6 +203,17 @@ const handleLoanReq = function (e) {
 };
 
 ///////////////////////////////////
+// Sorting
+const handleSort = function (e) {
+    e.preventDefault();
+
+    const { movements } = currentUser;
+    sortState = !sortState;
+
+    displayMovements(movements);
+};
+
+///////////////////////////////////
 // Log out
 const logout = function () {
     currentUser = {};
@@ -234,7 +244,7 @@ btnLogin.addEventListener('click', handleLogin);
 btnTransfer.addEventListener('click', handleTransfer);
 btnLoan.addEventListener('click', handleLoanReq);
 btnClose.addEventListener('click', closeAcc);
-
+btnSort.addEventListener('click', handleSort);
 
 // /////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
