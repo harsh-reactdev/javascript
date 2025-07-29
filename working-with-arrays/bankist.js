@@ -46,16 +46,16 @@ const account1 = {
     pin: 1111,
 
     movementsDates: [
-        '2019-11-18T21:31:17.178Z',
-        '2019-12-23T07:42:02.383Z',
-        '2020-01-28T09:15:04.904Z',
-        '2020-04-01T10:17:24.185Z',
-        '2020-05-08T14:11:59.604Z',
-        '2020-05-27T17:01:17.194Z',
-        '2020-07-11T23:36:17.929Z',
-        '2020-07-12T10:51:36.790Z',
+        '2024-11-18T21:31:17.178Z',
+        '2024-12-23T07:42:02.383Z',
+        '2025-01-28T09:15:04.904Z',
+        '2025-04-01T10:17:24.185Z',
+        '2025-05-08T14:11:59.604Z',
+        '2025-07-25T17:01:17.194Z',
+        '2025-07-27T23:36:17.929Z',
+        '2025-07-29T10:51:36.790Z',
     ],
-    currency: 'EUR',
+    currency: 'INR',
     locale: 'pt-PT', // de-DE
 };
 
@@ -66,14 +66,14 @@ const account2 = {
     pin: 2222,
 
     movementsDates: [
-        '2019-11-01T13:15:33.035Z',
-        '2019-11-30T09:48:16.867Z',
-        '2019-12-25T06:04:23.907Z',
-        '2020-01-25T14:18:46.235Z',
-        '2020-02-05T16:33:06.386Z',
-        '2020-04-10T14:43:26.374Z',
-        '2020-06-25T18:49:59.371Z',
-        '2020-07-26T12:01:20.894Z',
+        '2024-11-01T13:15:33.035Z',
+        '2024-11-30T09:48:16.867Z',
+        '2024-12-25T06:04:23.907Z',
+        '2025-01-25T14:18:46.235Z',
+        '2025-02-05T16:33:06.386Z',
+        '2025-04-10T14:43:26.374Z',
+        '2025-06-25T18:49:59.371Z',
+        '2025-07-26T12:01:20.894Z',
     ],
     currency: 'USD',
     locale: 'en-US',
@@ -111,7 +111,40 @@ const inputClosePin = document.querySelector('.form__input--pin');
 // CURRENT USER
 let currentUser;
 let sortState = false;
+
+const localiseDateLabel = function (locale, date) {
+
+    const options = {
+        hour: 'numeric',
+        minute: 'numeric',
+        day: 'numeric',
+        month: 'numeric',
+        year: 'numeric',
+        // weekday: 'long'
+    };
+
+    // const locale = navigator.language;
+    // console.log(locale);
+
+    return new Intl.DateTimeFormat(locale, options).format(date);
+};
+
 ///////////////////////////////
+// Adding current date
+// (() => {
+//     const now = new Date();
+//     const day = `${now.getDate()}`.padStart(2, 0);
+//     const month = `${now.getMonth() + 1}`.padStart(2, 0);
+//     const year = now.getFullYear();
+
+//     const hour = now.getHours();
+//     const min = `${now.getMinutes()}`.padStart(2, 0);
+
+//     labelDate.textContent = `${day}/${month}/${year}, ${hour}:${min}`;
+// })();
+
+
+///////////////////////////////////////////////
 // creating user names on web app instantiation
 const createUsername = function (accounts) {
     accounts.forEach((acc) => {
@@ -120,16 +153,61 @@ const createUsername = function (accounts) {
 };
 createUsername(accounts);
 
+
+///////////////////////////////////////////////////////
+// format dates with labels
+const getDateLabel = (dateString, locale) => {
+    const date = Date.now();
+    const trDate = new Date(dateString);
+    const dateDiff = Math.floor((date - trDate) / (1000 * 60 * 60 * 24));
+
+    let label = '';
+    if (dateDiff === 0) {
+        label = 'Today';
+        return label;
+    } else if (dateDiff === 1) {
+        label = 'Yesterday';
+        return label;
+    } else if (dateDiff <= 7) {
+
+        return `${dateDiff} days ago`;
+    }
+
+    // const day = `${trDate.getDate()}`.padStart(2, 0);
+    // const month = `${trDate.getMonth() + 1}`.padStart(2, 0);
+    // const year = trDate.getFullYear();
+
+    // return `${day}/${month}/${year}`;
+    return new Intl.DateTimeFormat(locale).format(date);
+};
+
+
 //////////////////////////
 // displaying transactions
-const displayMovements = function (movements) {
-    const sorted = sortState ? movements.toSorted((a, b) => b - a) : movements;
-    sorted.forEach(function (mov, i) {
+const displayMovements = function (cur) {
+    containerMovements.innerHTML = '';
+    const { movements, movementsDates, locale } = cur;
+
+    const trWithDate = movements.map((mov, i) => ({
+        mov,
+        // movDate: localiseDateLabel(new Date(movementsDates.at(i))),
+        dateLabel: getDateLabel(movementsDates.at(i), locale),
+    }));
+
+    // const sorted = sortState ? movements.toSorted((a, b) => b - a) : movements;
+    const sorted = sortState ? trWithDate.toSorted((a, b) => a.mov - b.mov) : trWithDate;
+
+
+    sorted.forEach((movementObj, i) => {
+        const { mov, dateLabel } = movementObj;
         const movType = mov > 0 ? 'deposit' : 'withdrawal';
+        // const date = new Date(movDate).toLocaleDateString();
+
 
         const html = `
             <div class="movements__row">
                 <div class="movements__type movements__type--${movType}">${i + 1} ${movType}</div>
+                <div class="movements__date">${dateLabel}</div>
                 <div class="movements__value">₹${Math.abs(mov).toFixed(2)}</div>
             </div>
         `;
@@ -140,15 +218,15 @@ const displayMovements = function (movements) {
 
 //////////////////////
 // calculating summary
-const calcSummary = function (transactions, intRate) {
-    const incomes = transactions.filter(tr => tr > 0).reduce((bal, tr) => bal + tr, 0);
-    const payments = transactions.filter(tr => tr < 0).reduce((bal, tr) => bal + tr, 0);
+const calcSummary = function ({ movements, interestRate }) {
+    const incomes = movements.filter(tr => tr > 0).reduce((bal, tr) => bal + tr, 0);
+    const payments = movements.filter(tr => tr < 0).reduce((bal, tr) => bal + tr, 0);
 
-    const interest = transactions.filter(tr => tr > 0).map(tr => (tr * intRate) / 100).filter(tr => tr > 1).reduce((totInt, curr) => totInt + curr);
+    const interestVal = movements.filter(tr => tr > 0).map(tr => (tr * interestRate) / 100).filter(tr => tr > 1).reduce((totInt, curr) => totInt + curr);
 
     labelSumIn.textContent = `₹${incomes.toFixed(2)}`;
     labelSumOut.textContent = `₹${Math.abs(payments).toFixed(2)}`;
-    labelSumInterest.textContent = `₹${interest.toFixed(2)}`;
+    labelSumInterest.textContent = `₹${interestVal.toFixed(2)}`;
 };
 
 //////////////////////////////
@@ -159,14 +237,15 @@ const calcBalance = function (acc) {
 };
 
 const initUserUI = function () {
-    const { movements, interestRate, owner } = currentUser;
+    const { owner, locale } = currentUser;
 
     labelWelcome.textContent = `Welcome back, ${owner.split(' ')[0]}`;
     containerApp.style.opacity = 100;
 
+    labelDate.textContent = localiseDateLabel(locale, new Date());
     calcBalance(currentUser);
-    displayMovements(movements);
-    calcSummary(movements, interestRate);
+    displayMovements(currentUser);
+    calcSummary(currentUser);
 
 };
 
@@ -204,9 +283,12 @@ const initTransfer = function (to, amt) {
 
     // credit the receiver
     toAcc?.movements.push(amt);
+    toAcc?.movementsDates.push(new Date().toISOString());
+
 
     // debit the giver
     currentUser.movements.push(-amt);
+    currentUser.movementsDates.push(new Date().toISOString());
 
     initUserUI(currentUser);
 };
@@ -238,10 +320,11 @@ const handleLoanReq = function (e) {
     e.preventDefault();
 
     // const loanAmt = +inputLoanAmount.value;
-    const loanAmt = Math.floor(inputLoanAmount).value;
+    const loanAmt = Math.floor(inputLoanAmount.value);
 
     if (loanAmt > 0 && currentUser.movements.some(mov => mov > 0 && mov > (0.1 * loanAmt))) {
         currentUser.movements.push(loanAmt);
+        currentUser.movementsDates.push(new Date().toISOString());
         initUserUI();
     }
 
@@ -254,10 +337,9 @@ const handleLoanReq = function (e) {
 const handleSort = function (e) {
     e.preventDefault();
 
-    const { movements } = currentUser;
     sortState = !sortState;
 
-    displayMovements(movements);
+    displayMovements(currentUser);
 };
 
 ///////////////////////////////////
