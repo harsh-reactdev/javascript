@@ -56,7 +56,7 @@ const account1 = {
         '2025-07-29T10:51:36.790Z',
     ],
     currency: 'INR',
-    locale: 'pt-PT', // de-DE
+    locale: 'en-IN', // de-DE
 };
 
 const account2 = {
@@ -154,6 +154,16 @@ const createUsername = function (accounts) {
 createUsername(accounts);
 
 
+/////////////////////////////////////////////////////////
+// localising numerical values
+const localiseNumerics = function (locale, currency, value) {
+    return new Intl.NumberFormat(locale, {
+        style: 'currency',
+        currency
+    }).format(value);
+};
+
+
 ///////////////////////////////////////////////////////
 // format dates with labels
 const getDateLabel = (dateString, locale) => {
@@ -186,7 +196,7 @@ const getDateLabel = (dateString, locale) => {
 // displaying transactions
 const displayMovements = function (cur) {
     containerMovements.innerHTML = '';
-    const { movements, movementsDates, locale } = cur;
+    const { movements, movementsDates, locale, currency } = cur;
 
     const trWithDate = movements.map((mov, i) => ({
         mov,
@@ -208,7 +218,7 @@ const displayMovements = function (cur) {
             <div class="movements__row">
                 <div class="movements__type movements__type--${movType}">${i + 1} ${movType}</div>
                 <div class="movements__date">${dateLabel}</div>
-                <div class="movements__value">₹${Math.abs(mov).toFixed(2)}</div>
+                <div class="movements__value">${localiseNumerics(locale, currency, Math.abs(mov).toFixed(2))}</div>
             </div>
         `;
 
@@ -218,22 +228,23 @@ const displayMovements = function (cur) {
 
 //////////////////////
 // calculating summary
-const calcSummary = function ({ movements, interestRate }) {
+const calcSummary = function ({ movements, interestRate, currency, locale }) {
     const incomes = movements.filter(tr => tr > 0).reduce((bal, tr) => bal + tr, 0);
     const payments = movements.filter(tr => tr < 0).reduce((bal, tr) => bal + tr, 0);
 
     const interestVal = movements.filter(tr => tr > 0).map(tr => (tr * interestRate) / 100).filter(tr => tr > 1).reduce((totInt, curr) => totInt + curr);
 
-    labelSumIn.textContent = `₹${incomes.toFixed(2)}`;
-    labelSumOut.textContent = `₹${Math.abs(payments).toFixed(2)}`;
-    labelSumInterest.textContent = `₹${interestVal.toFixed(2)}`;
+    labelSumIn.textContent = `${localiseNumerics(locale, currency, incomes.toFixed(2))}`;
+    labelSumOut.textContent = `${localiseNumerics(locale, currency, Math.abs(payments).toFixed(2))}`;
+    labelSumInterest.textContent = `${localiseNumerics(locale, currency, interestVal.toFixed(2))}`;
 };
 
 //////////////////////////////
 // calculating account balance
 const calcBalance = function (acc) {
+    const { locale, currency } = acc;
     acc.balance = acc.movements.reduce((bal, mov) => bal + mov, 0);
-    labelBalance.textContent = `₹${acc.balance.toFixed(2)}`;
+    labelBalance.textContent = `${localiseNumerics(locale, currency, acc.balance.toFixed(2))}`;
 };
 
 const initUserUI = function () {
@@ -323,9 +334,11 @@ const handleLoanReq = function (e) {
     const loanAmt = Math.floor(inputLoanAmount.value);
 
     if (loanAmt > 0 && currentUser.movements.some(mov => mov > 0 && mov > (0.1 * loanAmt))) {
-        currentUser.movements.push(loanAmt);
-        currentUser.movementsDates.push(new Date().toISOString());
-        initUserUI();
+        setTimeout(function () {
+            currentUser.movements.push(loanAmt);
+            currentUser.movementsDates.push(new Date().toISOString());
+            initUserUI();
+        }, 3000);
     }
 
     inputLoanAmount.value = '';

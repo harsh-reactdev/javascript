@@ -49,3 +49,12 @@ now.toISOString(); //converts the time into an ISO string
 
 const future = now.setFullYear(2035); //sets the year to provided value
 // console.log(now.getHours());
+
+
+////////////////////////////////////////////////////////////////////////////
+// setTimeout and setInterval
+
+setTimeout(() => { }, 5000, 8, 9, 10); //outputs after 5 seconds of code execution;
+
+setInterval
+

@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.fjalla-one-regular {
+  font-family: 'Fjalla One', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+html {
+  font-size: 62.5%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Fjalla One', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1;
+  color: #555;
+  background-color: beige;
+  overflow-x: hidden;
+}
+
+.main {
+  height: 100vh;
+  padding: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-size: 30px;
+  justify-content: center;
+  align-items: start;
+}
+
+.parent {
+  /* height: 100vh;
+  padding: 80px; */
+
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  /* position: absolute; */
+}
+
+.hour,
+.minute,
+.second {
+  padding: 20px;
+  font-size: 280px;
+  background-color: black;
+  height: 40vh;
+  width: 30vw;
+  border-radius: 12px;
+  line-height: 36vh;
+  text-align: center;
+}
