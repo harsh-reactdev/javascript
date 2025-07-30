@@ -111,6 +111,62 @@ const inputClosePin = document.querySelector('.form__input--pin');
 // CURRENT USER
 let currentUser;
 let sortState = false;
+let timer;
+
+const startLogOutTimer = function () {
+    const tick = function () {
+        const min = String(Math.trunc(time / 60)).padStart(2, 0);
+        const sec = String(time % 60).padStart(2, 0);
+
+        // In each call, print the remaining time to UI
+        labelTimer.textContent = `${min}:${sec}`;
+
+        // When 0 seconds, stop timer and log out user
+        if (time === 0) {
+            logout();
+        }
+
+        // Decrease 1s
+        time--;
+    };
+
+    // Set time to 5 minutes
+    let time = 120;
+
+    // Call the timer every second
+    tick();
+    const timer = setInterval(tick, 1000);
+
+    return timer;
+};
+
+///////////////////////////////////
+// Log out
+const logout = function () {
+    currentUser = {};
+    // initUserUI(currentUser);
+    containerApp.style.opacity = 0;
+};
+
+
+/////////////////////////////////////////
+// login timer
+const initTimer = function () {
+    let leftTime = 5 * 60;
+
+    setInterval(() => {
+        const minutes = String(Math.floor(leftTime / 60)).padStart(2, 0);
+        const seconds = String(Math.floor(leftTime % 60)).padStart(2, 0);
+
+        labelTimer.textContent = `${minutes}:${seconds}`;
+        leftTime--;
+    }, 1000);
+
+    timer = setTimeout(() => {
+        logout();
+    }, 300000);
+    return timer;
+};
 
 const localiseDateLabel = function (locale, date) {
 
@@ -257,21 +313,6 @@ const initUserUI = function () {
     calcBalance(currentUser);
     displayMovements(currentUser);
     calcSummary(currentUser);
-
-};
-
-////////////////
-// login handler
-const handleLogin = function (e) {
-    e.preventDefault();
-    currentUser = accounts.find((acc) => inputLoginUsername.value === acc.username && parseInt(inputLoginPin.value) === acc.pin);
-
-    // clearing input fields and removing focus
-    inputLoginUsername.value = inputLoginPin.value = '';
-    inputLoginUsername.blur();
-    inputLoginPin.blur();
-
-    initUserUI(currentUser);
 };
 
 
@@ -289,6 +330,7 @@ const checkUserValidity = function (toUser) {
 };
 
 const initTransfer = function (to, amt) {
+
     // find the recepient account
     const toAcc = accounts.find(acc => acc.username === to || acc.owner === to);
 
@@ -302,6 +344,8 @@ const initTransfer = function (to, amt) {
     currentUser.movementsDates.push(new Date().toISOString());
 
     initUserUI(currentUser);
+    clearInterval(timer);
+    timer = startLogOutTimer();
 };
 
 const handleTransfer = function (e) {
@@ -335,9 +379,12 @@ const handleLoanReq = function (e) {
 
     if (loanAmt > 0 && currentUser.movements.some(mov => mov > 0 && mov > (0.1 * loanAmt))) {
         setTimeout(function () {
+            clearTimeout(timer);
             currentUser.movements.push(loanAmt);
             currentUser.movementsDates.push(new Date().toISOString());
             initUserUI();
+            clearInterval(timer);
+            timer = startLogOutTimer();
         }, 3000);
     }
 
@@ -356,14 +403,6 @@ const handleSort = function (e) {
 };
 
 ///////////////////////////////////
-// Log out
-const logout = function () {
-    currentUser = {};
-    // initUserUI(currentUser);
-    containerApp.style.opacity = 0;
-};
-
-///////////////////////////////////
 // Account close handler
 const closeAcc = function (e) {
     e.preventDefault();
@@ -376,6 +415,23 @@ const closeAcc = function (e) {
     };
 
     inputClosePin.value = inputCloseUsername.value = '';
+};
+
+////////////////
+// login handler
+const handleLogin = function (e) {
+    e.preventDefault();
+    currentUser = accounts.find((acc) => inputLoginUsername.value === acc.username && parseInt(inputLoginPin.value) === acc.pin);
+
+    if (currentUser) {
+        // clearing input fields and removing focus
+        inputLoginUsername.value = inputLoginPin.value = '';
+        inputLoginUsername.blur();
+        inputLoginPin.blur();
+        initUserUI(currentUser);
+        if (timer) clearInterval(timer);
+        timer = startLogOutTimer();
+    } else alert('Invalid Credentials.!');
 };
 
 

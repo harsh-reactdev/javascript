@@ -30,11 +30,11 @@ body {
 
 .main {
   height: 100vh;
-  padding: 80px;
+  padding: 5rem;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  font-size: 30px;
+  gap: 1rem;
+  font-size: 3rem;
   justify-content: center;
   align-items: start;
 }
@@ -45,7 +45,7 @@ body {
 
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  gap: 2rem;
   justify-content: center;
   align-items: center;
   /* position: absolute; */
@@ -54,12 +54,12 @@ body {
 .hour,
 .minute,
 .second {
-  padding: 20px;
-  font-size: 280px;
+  padding: 2.5rem;
+  font-size: 28rem;
   background-color: black;
   height: 40vh;
   width: 30vw;
-  border-radius: 12px;
+  border-radius: 1.2rem;
   line-height: 36vh;
   text-align: center;
 }
