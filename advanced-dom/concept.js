@@ -25,11 +25,64 @@ console.log(document.getElementsByTagName('button'));
 // .insertAdjacentHTML
 
 // .createElement(elem_name_as_string)
-const msg = document.createElement('div');
-msg.classList.add('cookie-msg');
-msg.textContent = 'We collect cookies for personalisation.';
+const message = document.createElement('div');
+message.classList.add('cookie-message');
+// message.textContent = 'We collect cookies for personalisation.';
 
-msg.innerHTML = `We collect cookies for personalisation. <button class='button--close-cokie'>Got it</button>`;
-header.insertAdjacentHTML('afterbegin', msg.innerHTML);
+message.innerHTML = `We collect cookies for personalisation. <button class='btn btn--close--cookie'>Got it</button>`;
+// header.prepend(message); //prepending adds the given child as the first chxild of the element its being called from, in this case, header element
+header.append(message);
 
-console.log(msg);
+
+// header.append(message.cloneNode(true)); appends multiple copies of the same element
+
+// header.before(message); //adds the element before the header element
+// header.after(message); //adds the element after the header element
+
+document
+    .querySelector('.btn--close--cookie')
+    .addEventListener('click', function () {
+        message.remove();
+        // message.parentElement.removeChild(message);
+    });
+
+
+//////////////////////////////////////////////
+// styles
+
+message.style.backgroundColor = '#37383d';
+message.style.width = '120%';
+
+// console.log(getComputedStyle(message));
+
+// document.documentElement.style.setProperty();
+
+// ///////////////////////////////////////////////////////////////////
+// attributes
+
+const logo = document.querySelector('.nav__logo');
+
+logo.alt; // returs the value for src attribute
+logo.src; // returns value of src attribute
+logo.className; //returns class name
+logo.classList; //returns class list
+// console.log(logo); can also access its attributes by calling, for example, logo.alt or logo.src
+
+// to read non-standard attributes
+logo.getAttribute('designer'); //will give us the value for the non-standard attribute that the user has set
+
+// to set, 
+logo.setAttribute('designer', 'harsh');
+
+// data attributes
+logo.dataset;
+
+// ///////////////////////////////////////////
+// classes
+
+logo.classList.add();
+logo.classList.remove();
+logo.classList.toggle();
+logo.classList.contains();
+
+logo.className;
