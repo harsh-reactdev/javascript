@@ -80,9 +80,9 @@ logo.dataset;
 // ///////////////////////////////////////////
 // classes
 
-logo.classList.add();
-logo.classList.remove();
-logo.classList.toggle();
-logo.classList.contains();
+logo.classList.add(); // adds class names | we can send one or many separated by commas
+logo.classList.remove(); // remove class names
+logo.classList.toggle(); // toggle classname
+logo.classList.contains(); //check if the classList contains the specified class name
 
-logo.className;
+logo.className; //gives access to one classname in particular
