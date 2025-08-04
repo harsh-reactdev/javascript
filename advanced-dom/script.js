@@ -10,10 +10,16 @@ const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
+const navLinks = document.querySelector('.nav__links');
+
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+
+
 
 btnScrollTo.addEventListener('click', function (e) {
     const sec1Coords = section1.getBoundingClientRect();
-
     // window.scrollTo({
     //     left: sec1Coords.left + window.pageXOffset,
     //     top: sec1Coords.top + window.pageYOffset,
@@ -47,26 +53,56 @@ document.addEventListener('keydown', function (e) {
     }
 });
 
+/////////////////////////////////////////////////////////////////////////////
+// Page navigation using event delegation
 
-////////////////////////////////////////////////////////////////////////////
-// random color generator 
-// event propagation
+/////////////////////////////////
+// without using event delegation
+/////////////////////////////////
+// document.querySelectorAll('.nav__link').forEach((element) => {
+//     element.addEventListener('click', function (e) {
+//         e.preventDefault();
 
-// const randomColor = (min = 0, max = 255) => Math.floor(Math.random() * (max - min + 1) + min);
+//         const toID = this.getAttribute("href");
+//         // console.log(toID);
+//         // console.log(this.href); //gives absolute url
 
-// const generateRgb = () => `rgb(${randomColor()}, ${randomColor()}, ${randomColor()})`;
-
-// // console.log(generateRgb());
-
-// document.querySelector('.nav__link').addEventListener('click', function (e) {
-//     // console.log('Link');
-//     this.style.backgroundColor = generateRgb();
+//         document.querySelector(toID).scrollIntoView({ behavior: 'smooth' });
+//     });
 // });
-// document.querySelector('.nav__links').addEventListener('click', function (e) {
-//     // console.log('Links');
-//     this.style.backgroundColor = generateRgb();
-// });
-// document.querySelector('.nav').addEventListener('click', function (e) {
-//     // console.log('Nav');
-//     this.style.backgroundColor = generateRgb();
-// });
+
+/////////////////////////////////
+// using event delegation
+/////////////////////////////////
+const handleNavigation = function (e) {
+    e.preventDefault();
+
+    // if event triggers from the parent element itself, ignore it and return
+    if (e.target.getAttribute('class') == 'nav__links') {
+        return;
+    };
+    // getting the id of the element where the event actually originated
+    // and also getting the href attribute from the element to identify where to navigate to
+    const toID = e.target.getAttribute('href');
+
+    // getting the destination element to scroll to and adding smooth scrolling to it
+    document.querySelector(toID).scrollIntoView({ behavior: 'smooth' });
+};
+
+navLinks.addEventListener('click', handleNavigation);
+
+tabsContainer.addEventListener('click', function (e) {
+    e.preventDefault();
+    const el = e.target.closest('.operations__tab');
+    if (el) {
+        // disabling active class on all tabs
+        tabs.forEach(tab => tab.classList.remove('operations__tab--active'));
+        // enabling active class on clicked tab
+        el.classList.add('operations__tab--active');
+
+        // enabling content wrt the active tab
+        tabsContent.forEach(tC => tC.classList.remove('operations__content--active'));
+        document.querySelector(`.operations__content--${el.dataset.tab}`).classList.add('operations__content--active');
+    };
+    // const targetElement =
+});

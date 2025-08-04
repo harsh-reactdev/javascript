@@ -86,3 +86,27 @@ const logo = document.querySelector('.nav__logo');
 // logo.classList.contains(); //check if the classList contains the specified class name
 
 // logo.className; //gives access to one classname in particular
+
+////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+// random color generator 
+// event propagation
+
+// const randomColor = (min = 0, max = 255) => Math.floor(Math.random() * (max - min + 1) + min);
+
+// const generateRgb = () => `rgb(${randomColor()}, ${randomColor()}, ${randomColor()})`;
+
+// // console.log(generateRgb());
+
+// document.querySelector('.nav__link').addEventListener('click', function (e) {
+//     // console.log('Link');
+//     this.style.backgroundColor = generateRgb();
+// });
+// document.querySelector('.nav__links').addEventListener('click', function (e) {
+//     // console.log('Links');
+//     this.style.backgroundColor = generateRgb();
+// });
+// document.querySelector('.nav').addEventListener('click', function (e) {
+//     // console.log('Nav');
+//     this.style.backgroundColor = generateRgb();
+// });
