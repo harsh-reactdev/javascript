@@ -1,0 +1,34 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  background-color: black;
+}
+
+body {
+  background-color: silver;
+  margin: auto 12vw;
+  padding: 16px;
+  height: 100vh;
+}
+
+header {
+  height: 90px;
+  background-color: antiquewhite;
+  padding: 16px;
+}
+
+nav {
+  height: inherit;
+  max-width: fit-content;
+  display: flex;
+  position: absolute;
+}
+
+.logo {
+  transform: scale(0.08);
+  position: relative;
+}
