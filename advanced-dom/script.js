@@ -2,6 +2,7 @@
 
 ///////////////////////////////////////
 // Modal window
+const header = document.querySelector('.header');
 
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
@@ -10,6 +11,7 @@ const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 
+const allSections = document.querySelectorAll('.section');
 const section1 = document.querySelector('#section--1');
 const initCoords = section1.getBoundingClientRect();
 
@@ -20,9 +22,8 @@ const tabs = document.querySelectorAll('.operations__tab');
 const tabsContainer = document.querySelector('.operations__tab-container');
 const tabsContent = document.querySelectorAll('.operations__content');
 
-const header = document.querySelector('.header');
-
-const allSections = document.querySelectorAll('.section');
+const slides = document.querySelectorAll('.slide');
+const dotContainer = document.querySelector('.dots');
 
 //////////////////////////////////////////////////////////////
 btnScrollTo.addEventListener('click', function (e) {
@@ -191,6 +192,121 @@ const sectionsObs = new IntersectionObserver(revealSections, {
 allSections.forEach((section) => {
     section.classList.add('section--hidden');
     sectionsObs.observe(section);
-})
+});
 
+// ///////////////////////////////////////////////////////////////////////////////
+// lazy loading images
+const imgTargets = document.querySelectorAll('img[data-src]'); //selecting images with data-src attribute only
+
+const lazyLoadImg = function (entries, observer) {
+    const [entry] = entries;
+
+    if (!entry.isIntersecting) return;
+    // on instersection, replace low quality img with high quality img
+    entry.target.src = entry.target.dataset.src;
+
+    entry.target.addEventListener('load', function () {
+        entry.target.classList.remove('lazy-img');
+    });
+};
+
+const imgObs = new IntersectionObserver(lazyLoadImg, {
+    root: null,
+    threshold: 0,
+    rootMargin: '200px'
+});
+
+imgTargets.forEach((img) => imgObs.observe(img));
+
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+// implementing slider component
+const slider = function () {
+    const sliderBtnLeft = document.querySelector('.slider__btn--left');
+    const sliderBtnRight = document.querySelector('.slider__btn--right');
+    let curSlide = 0;
+    let maxSlide = slides.length;
+
+    ///////////////////////////////////////////////////////////////////////////////////////
+    // functions
+
+    // adding dots for slide navigation
+    const createDots = function () {
+        slides.forEach(function (_, i) {
+            dotContainer.insertAdjacentHTML('beforeend',
+                `<button class="dots__dot" data-slide="${i}"></button>`);
+        });
+    };
+
+    const activateDot = function (slide) {
+        document.querySelectorAll('.dots__dot').forEach(dot => dot.classList.remove('dots__dot--active'));
+        document.querySelector(`.dots__dot[data-slide="${slide}"]`).classList.add('dots__dot--active');
+    };
+
+    const goToSlide = function (translationVal) {
+        slides.forEach((slide, i) => {
+            slide.style.transform = `translateX(${100 * (i - translationVal)}%)`;
+        });
+
+    };
+
+    const nextSlide = function () {
+        if (curSlide === maxSlide - 1) {
+            curSlide = 0;
+        } else {
+            curSlide++;
+        }
+        goToSlide(curSlide);
+        activateDot(curSlide);
+    };
+
+    const prevSlide = function () {
+        if (curSlide === 0) {
+            curSlide = maxSlide - 1;
+        } else {
+            curSlide--;
+        }
+        goToSlide(curSlide);
+        activateDot(curSlide);
+    };
+
+    /////////////////////////////////////////////////////////////////////
+    // event listeners
+
+    // move to next slide
+    sliderBtnRight.addEventListener('click', nextSlide);
+
+    // move to previous slide
+    sliderBtnLeft.addEventListener('click', prevSlide);
+
+    // adding keyboard events for the slider
+    document.addEventListener('keydown', function (e) {
+        e.preventDefault();
+        if (e.key === 'ArrowRight') {
+            nextSlide();
+        }
+        if (e.key === 'ArrowLeft') {
+            prevSlide();
+        }
+    });
+
+    dotContainer.addEventListener('click', function (e) {
+        if (e.target.classList.contains('dots__dot')) {
+            goToSlide(e.target.dataset['slide']);
+            activateDot(e.target.dataset['slide']);
+        }
+    });
+
+    // initiate slider component
+
+    const initSlider = function () {
+        createDots();
+        activateDot(curSlide);
+        goToSlide(curSlide);
+    };
+
+    initSlider();
+};
+
+slider();
 
