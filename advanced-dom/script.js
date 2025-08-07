@@ -9,17 +9,24 @@ const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 
 const btnScrollTo = document.querySelector('.btn--scroll-to');
+
 const section1 = document.querySelector('#section--1');
-const navLinks = document.querySelector('.nav__links');
+const initCoords = section1.getBoundingClientRect();
+
+const nav = document.querySelector('.nav__links');
+const navComponent = document.querySelector('.nav');
 
 const tabs = document.querySelectorAll('.operations__tab');
 const tabsContainer = document.querySelector('.operations__tab-container');
 const tabsContent = document.querySelectorAll('.operations__content');
 
+const header = document.querySelector('.header');
 
+const allSections = document.querySelectorAll('.section');
 
+//////////////////////////////////////////////////////////////
 btnScrollTo.addEventListener('click', function (e) {
-    const sec1Coords = section1.getBoundingClientRect();
+    // const sec1Coords = section1.getBoundingClientRect();
     // window.scrollTo({
     //     left: sec1Coords.left + window.pageXOffset,
     //     top: sec1Coords.top + window.pageYOffset,
@@ -89,7 +96,7 @@ const handleNavigation = function (e) {
     document.querySelector(toID).scrollIntoView({ behavior: 'smooth' });
 };
 
-navLinks.addEventListener('click', handleNavigation);
+nav.addEventListener('click', handleNavigation);
 
 tabsContainer.addEventListener('click', function (e) {
     e.preventDefault();
@@ -106,3 +113,84 @@ tabsContainer.addEventListener('click', function (e) {
     };
     // const targetElement =
 });
+
+//////////////////////////////////////////////////////////////////////////////
+// passing arguments to event handlers
+
+const handleHover = function (e) {
+    if (e.target.classList.contains('nav__link')) {
+        // the value of this here is undefined by default in strict mode
+        // its being overridden by binding a value to this
+        const link = e.target;
+        const siblings = link.closest('.nav').querySelectorAll('.nav__link');
+        const logo = link.closest('.nav').querySelector('img');
+
+        siblings.forEach(el => {
+            if (el !== link) {
+                el.style.opacity = this;
+            }
+        });
+        logo.style.opacity = this;
+    }
+};
+
+// binding the value of this to 0.5 in the handler callback fn
+nav.addEventListener('mouseover', handleHover.bind(0.5));
+
+nav.addEventListener('mouseout', handleHover.bind(1));
+
+//////////////////////////////////////////////////////////////////////////////
+// sticky navigation
+
+// window.addEventListener('scroll', function () {
+//     if (window.scrollY > initCoords.top) {
+//         nav.classList.add('sticky');
+//         // nav.style.opacity = 0.75;
+//     } else {
+//         nav.classList.remove('sticky');
+//         // nav.style.opacity = 1;
+//     }
+// });
+
+// using Intersection Observer API
+const navHeight = nav.getBoundingClientRect().height;
+
+const stickyNav = function (entries) {
+    const [entry] = entries;
+    if (!entry.isIntersecting) {
+        navComponent.classList.add('sticky');
+    } else {
+        navComponent.classList.remove('sticky');
+    }
+};
+const observer = new IntersectionObserver(stickyNav, {
+    root: null,
+    threshold: 0,
+    rootMargin: `-${navHeight}px`
+});
+
+observer.observe(header);
+
+// //////////////////////////////////////////////////////////////////////////
+// revealing sections
+
+const revealSections = function (entries, observer) {
+    entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        entry.target.classList.remove('section--hidden');
+        observer.unobserve(entry.target);
+    });
+};
+
+const sectionsObs = new IntersectionObserver(revealSections, {
+    root: null,
+    threshold: 0.15
+});
+
+allSections.forEach((section) => {
+    section.classList.add('section--hidden');
+    sectionsObs.observe(section);
+})
+
+
