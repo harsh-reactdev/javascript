@@ -35,6 +35,15 @@ class MyBank {
         }
     }
 
+    #initiateTransfer(receiver, amount) {
+        if (receiver !== this.activeUser.userName && this.activeUser.balance > amount) {
+            if (this.users.find(user => user.userName == receiver)) {
+                receiver.transactions.push(amount);
+                this.activeUser.transactions.push(-amount);
+            }
+        }
+    };
+
     login(email, password) {
         this.#authoriseUser(email, password);
     }
@@ -49,7 +58,9 @@ class MyBank {
         else alert('Fill all the details.!');
     }
 
-    #initiateTransfer;
+    handleTransfer(receiver, amount) {
+        this.#initiateTransfer(receiver, amount);
+    }
 }
 
 export default MyBank;
