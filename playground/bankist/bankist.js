@@ -45,7 +45,9 @@ class MyBank {
     };
 
     login(email, password) {
-        this.#authoriseUser(email, password);
+        // this.#authoriseUser(email, password);
+        // design a form to display on click on this login button and perform authorisation on submitted data
+
     }
 
     signUp(name, email, dob, password) {
@@ -63,4 +65,9 @@ class MyBank {
     }
 }
 
-export default MyBank;
+
+(() => {
+    const bank = new MyBank();
+
+    document.querySelector('btn--login').addEventListener('click', bank.login);
+})();
