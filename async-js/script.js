@@ -108,10 +108,45 @@ const getCountryInfo = function (country) {
 
 btn.addEventListener('click', function () {
     getCountryInfo('Republic of India');
-    getCountryInfo('Australia');
+    // getCountryInfo('Australia');
     // getCountryInfo('adafeaef'); // throws the manually created error
 });
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
+const renderCountryInfo = function (locationInfo) {
+    const { countryName, city } = locationInfo;
+    getCountryInfo(countryName);
+};
+
+const whereAmI = function (lat, lng) {
+    fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}`)
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(`Problem with geocoding.! ${res.status}`);
+            }
+
+            // if (res.status === 403) {
+            //     throw new Error('Too many requests.!');
+            // }
+
+            return res.json();
+        })
+        .then(data => {
+            // if (!data.countryName && !data.city) {
+            //     throw new Error(`No place information found at given coordinates.!`);
+            // } else {
+            // renderCountryInfo(data);
+            // }
+            console.log(data);
+        })
+        .catch(err => console.log(`Something went wrong.! ${err.message}`));
+};
+
+whereAmI(52.508, 13.381);
+whereAmI(19.037, 72.873);
+whereAmI(-33.933, 18.474);
+whereAmI(-37.933, 21.474);
+
+
 
