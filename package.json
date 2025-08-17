@@ -1,5 +1,19 @@
 {
   "dependencies": {
-    "lodash": "^4.17.21"
+    "core-js": "^3.45.0",
+    "lodash": "^4.17.21",
+    "regenerator-runtime": "^0.14.1"
+  },
+  "name": "javascript",
+  "version": "1.0.0",
+  "description": "A structured coursework on practical javascript for web application development.",
+  "repository": "https://github.com/harsh-reactdev/javascript.git",
+  "author": "harsh <harsh.reactdev@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "parcel": "^2.15.4"
+  },
+  "scripts": {
+    "start": "parcel index.html"
   }
 }
