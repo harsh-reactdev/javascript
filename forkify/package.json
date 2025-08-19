@@ -10,7 +10,9 @@
   "author": "Harshith M R",
   "license": "MIT",
   "dependencies": {
-    "parcel": "^2.15.4"
+    "core-js": "^3.45.0",
+    "parcel": "^2.15.4",
+    "regenerator-runtime": "^0.14.1"
   },
   "devDependencies": {
     "@parcel/transformer-sass": "2.15.4"
