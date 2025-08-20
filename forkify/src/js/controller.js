@@ -3,9 +3,15 @@ import 'regenerator-runtime/runtime';
 
 import * as model from './model.js';
 import recipeView from './views/recipeView.js';
+import searchView from './views/searchView.js';
+import resultsView from './views/resultsView.js';
 
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
+
+if (module.hot) {
+  module.hot.accept();
+}
 
 const controlRecipes = async function () {
   try {
@@ -20,7 +26,7 @@ const controlRecipes = async function () {
     const recipe = model.state.recipe;
 
     // 2. rendering the recipe
-    recipeView.renderSingleRecipe(recipe);
+    recipeView.render(recipe);
 
   } catch (err) {
     // console.error(err);
@@ -28,8 +34,33 @@ const controlRecipes = async function () {
   }
 };
 
+const controlSearch = async function () {
+  try {
+
+    // getting query
+    const query = searchView.getQuery();
+
+    if (!query) return;
+
+    // resultsView.renderSpinner();
+
+    // loading search results
+    await model.loadSearchResults(query);
+
+    console.log(model.state);
+    // rendering search results
+    // resultsView.render();
+
+
+  } catch (error) {
+    console.error(error);
+    // resultsView.renderFallbackUI();
+  }
+};
+
 const init = function () {
   recipeView.addHandlerRender(controlRecipes);
+  searchView.addHandlerSearch(controlSearch);
 };
 
 init();

@@ -1,13 +1,18 @@
 import { getJSON } from './helper';
-import { API_URL } from './config';
+import { API_URL, RESULTS_PER_PAGE } from './config';
 
 export const state = {
-    recipe: {}
+    recipe: {},
+    search: {
+        query: '',
+        results: [],
+        resultsPerPage: RESULTS_PER_PAGE
+    }
 };
 
 export const loadRecipe = async function (recipeId) {
     try {
-        const { data } = await getJSON(`${API_URL}/${recipeId}`);
+        const { data } = await getJSON(`${API_URL}${recipeId}`);
         const { recipe: rec } = data;
         state.recipe = {
             cookingTime: rec.cooking_time,
@@ -22,4 +27,29 @@ export const loadRecipe = async function (recipeId) {
     } catch (err) {
         throw err;
     }
+};
+
+export const loadSearchResults = async function (query) {
+    try {
+        state.search.query = query;
+
+        const { data: { recipes } } = await getJSON(`${API_URL}?search=${query}`);
+        state.search.results = recipes.map(rec => {
+            return {
+                id: rec.id,
+                title: rec.title,
+                imageUrl: rec.image_url,
+                publisher: rec.publisher
+            };
+        });
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const getSearchResultByPage = function (pageNo) {
+    const start = (pageNo - 1) * state.search.results.resultsPerPage;
+    const end = pageNo * state.search.results.resultsPerPage;
+
+    return state.search.results.slice(start, end);
 };
