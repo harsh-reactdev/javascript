@@ -1,3 +1,4 @@
+import 'core-js/actual';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
@@ -47,9 +48,8 @@ const controlSearch = async function () {
     // loading search results
     await model.loadSearchResults(query);
 
-    console.log(model.state);
     // rendering search results
-    // resultsView.render();
+    resultsView.render(model.getSearchResultByPage());
 
 
   } catch (error) {
