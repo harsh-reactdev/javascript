@@ -7,9 +7,11 @@ class ResultsView extends View {
     _errorMessage = 'We could not find any recipes for your query. Please try something different.!';
 
     _generateMarkupPreview(rec) {
+        const id = window.location.hash.slice(1);
+
         return (`
                 <li class="preview">
-                    <a class="preview__link" href="#${rec.id}">
+                    <a class="preview__link ${id === rec.id ? 'preview__link--active' : ''}" href="#${rec.id}">
                     <figure class="preview__fig">
                         <img src="${rec.imageUrl}" alt="Test" />
                     </figure>
