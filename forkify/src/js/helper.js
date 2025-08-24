@@ -8,9 +8,17 @@ const timeout = function (s) {
     });
 };
 
-export const getJSON = async function (url) {
+export const AJAX = async function (url, uploadData = undefined) {
+    const fetchAPI = uploadData ? fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(uploadData)
+    }) : fetch(url);
+
     try {
-        const res = await Promise.race([fetch(url), timeout(TIMEOUT_SEC)]);
+        const res = await Promise.race([fetchAPI, timeout(TIMEOUT_SEC)]);
         const data = await res.json();
 
         if (!res.ok) throw new Error(`${data.message}`);
@@ -19,4 +27,38 @@ export const getJSON = async function (url) {
     } catch (err) {
         throw err;
     }
+
 };
+
+// export const getJSON = async function (url) {
+//     try {
+//         const res = await Promise.race([fetch(url), timeout(TIMEOUT_SEC)]);
+//         const data = await res.json();
+
+//         if (!res.ok) throw new Error(`${data.message}`);
+
+//         return data;
+//     } catch (err) {
+//         throw err;
+//     }
+// };
+
+// export const sendJSON = async function (url, uploadData) {
+//     const fetchPro = fetch(url, {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify(uploadData)
+//     });
+//     try {
+//         const res = await Promise.race([fetchPro, timeout(TIMEOUT_SEC)]);
+//         const data = await res.json();
+
+//         if (!res.ok) throw new Error(`${data.message}`);
+
+//         return data;
+//     } catch (err) {
+//         throw err;
+//     }
+// };
