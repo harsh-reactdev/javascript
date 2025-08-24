@@ -91,7 +91,13 @@ const controlAddBookmark = function () {
   bookmarksView.render(model.state.bookmarks);
 };
 
+const controlBookmarkRender = function () {
+  bookmarksView.render(model.state.bookmarks);
+};
+
 const init = function () {
+  bookmarksView.addHandlerRender(controlBookmarkRender);
+
   recipeView.addHandlerRender(controlRecipes);
   recipeView.addHandlerUpdateServings(controlServings);
   recipeView.addHandlerBookmark(controlAddBookmark);
@@ -102,3 +108,7 @@ const init = function () {
 };
 
 init();
+
+const clearLocalStorage = function () {
+  localStorage.clear();
+};
