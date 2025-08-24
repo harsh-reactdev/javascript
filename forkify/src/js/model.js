@@ -53,7 +53,8 @@ export const loadSearchResults = async function (query) {
                 id: rec.id,
                 title: rec.title,
                 imageUrl: rec.image_url,
-                publisher: rec.publisher
+                publisher: rec.publisher,
+                ...(rec.key && { key: rec.key })
             };
         });
     } catch (error) {
@@ -109,7 +110,8 @@ export const uploadRecipe = async function (newRecipe) {
         const ingredients = Object.entries(data)
             .filter(entry => entry[0].startsWith('ingredient') && entry[1] !== '')
             .map(ing => {
-                const ingArr = ing[1].replaceAll(' ', '').split(',');
+                const ingArr = ing[1].split(',').map(el => el.trim());
+                // const ingArr = ing[1].replaceAll(' ', '').split(',');
                 if (ingArr.length !== 3) throw new Error('Wrong Ingredient Format.!');
 
                 const [quantity, unit, description] = ingArr;

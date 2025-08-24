@@ -56,7 +56,7 @@ class RecipeView extends View {
   };
 
   _generateMarkup() {
-    const { imageUrl, title, cookingTime, ingredients, publisher, servings, sourceUrl, isBookmarked } = this._data;
+    const { key, imageUrl, title, cookingTime, ingredients, publisher, servings, sourceUrl, isBookmarked } = this._data;
 
     return `
             <figure class="recipe__fig">
@@ -95,7 +95,7 @@ class RecipeView extends View {
                 </div>
               </div>
     
-              <div class="recipe__user-generated">
+              <div class="recipe__user-generated ${key ? '' : 'hidden'}">
                 <svg>
                   <use href="${icons}#icon-user"></use>
                 </svg>
