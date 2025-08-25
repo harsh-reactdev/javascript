@@ -5,7 +5,7 @@
   "description": "A recipe application.",
   "scripts": {
     "start": "parcel index.html",
-    "build": "parcel build index.html"
+    "build": "parcel build index.html --dist-dir ./dist "
   },
   "repository": "https://github.com/harsh-reactdev/javascript/tree/forkify-app",
   "author": "Harshith M R",
