@@ -1,0 +1,21 @@
+{
+  "name": "forkify",
+  "browserslist": "last 2 versions, > 0.5% and ie >= 11",
+  "version": "1.0.0",
+  "description": "A recipe application.",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html --dist-dir ./dist "
+  },
+  "repository": "https://github.com/harsh-reactdev/javascript/tree/forkify-app",
+  "author": "Harshith M R",
+  "license": "MIT",
+  "dependencies": {
+    "core-js": "^3.45.0",
+    "parcel": "^2.15.4",
+    "regenerator-runtime": "^0.14.1"
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "2.15.4"
+  }
+}
